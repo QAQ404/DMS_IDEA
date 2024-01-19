@@ -44,7 +44,7 @@ public class UserController {
         //把token存储到redis中
         ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
         operations.set(token,token,1, TimeUnit.HOURS);
-
+        System.out.println("123");
         return Result.success(token);
     }
 
