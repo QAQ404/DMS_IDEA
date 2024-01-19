@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Manager {
     private int id;
-    private Object inf;
+    private String name;
+
 }
