@@ -24,7 +24,7 @@ public class UserController {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    @PostMapping("/login")
+    @PostMapping("/login")  //登录
     public Result login(String username, String password) {
         if (username.length() == 0) return Result.error("账号不能为空");
         else if (password.length() == 0) return Result.error("密码不能为空");
@@ -38,6 +38,7 @@ public class UserController {
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", user.getId());
         claims.put("role", user.getRole());
+        claims.put("name", user.getName());
         String token = JwtUtil.genToken(claims);
 
         //把token存储到redis中
@@ -46,10 +47,18 @@ public class UserController {
         return Result.success(token);
     }
 
+    @GetMapping("/userInfo") //获取账号的基本信息
+    public Result<User> getUser() {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        User user = new User();
+        user.setId((Integer) map.get("id"));
+        user.setRole((Integer) map.get("role"));
+        user.setName((String) map.get("name")) ;
+        return Result.success(user);
+    }
 
-
-    @GetMapping("/exit")
-    public Result exit(@RequestHeader("Authorization") String token){
+    @GetMapping("/exit") //退出当前账号
+    public Result exit(@RequestHeader("Authorization") String token) {
         ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
         operations.getOperations().delete(token);
         ThreadLocalUtil.remove();

@@ -10,5 +10,10 @@ import lombok.NoArgsConstructor;
 public class Manager {
     private int id;
     private String name;
-
+    private String gender;
+    private String phone;
+    private String picture;
+    private String email;
+    private int buildingNumber;
+    private String workId;
 }

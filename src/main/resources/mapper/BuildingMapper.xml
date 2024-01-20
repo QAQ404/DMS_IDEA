@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dms_idea.dao.BuildingMapper">
+
+    <select id="getBuildingList">
+        select *
+        from dormitory_management_system.view_get_all_building_manager
+    </select>
+
+    <select id="ifNameHave">
+        select id
+        from dormitory_management_system.building
+        where name = #{name}
+    </select>
+
+    <insert id="addBuilding">
+        insert into dormitory_management_system.building(name, manager_id, unit_number)
+        VALUES (#{name}, #{managerId}, #{unitNumber});
+    </insert>
+
+    <insert id="addBuildingInfo">
+        insert into dormitory_management_system.building_info(building_id)
+        VALUES (#{id});
+    </insert>
+
+</mapper>
