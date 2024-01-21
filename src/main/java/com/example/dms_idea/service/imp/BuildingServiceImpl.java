@@ -50,4 +50,14 @@ public class BuildingServiceImpl implements BuildingService {
     public void addBuildingInfo(String id) {
         buildingMapper.addBuildingInfo(id);
     }
+
+    @Override
+    public Building getBuildingInfo(String buildingId) {
+        return buildingMapper.getBuildingInfo(buildingId);
+    }
+
+    @Override
+    public void updateBuildingInfo(Map<String, Object> map) {
+        buildingMapper.updateBuildingInfo(map);
+    }
 }

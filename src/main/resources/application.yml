@@ -12,9 +12,16 @@ spring:
     redis:
       host: localhost
       port: 6379
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 200MB
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   #config-location: classpath:mybatis-config.xml
   type-aliases-package: com.example.dms_idea.pojo
   configuration:
     map-underscore-to-camel-case: true
+
+

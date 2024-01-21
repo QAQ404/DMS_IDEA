@@ -20,8 +20,21 @@
     </insert>
 
     <insert id="addBuildingInfo">
-        insert into dormitory_management_system.building_info(building_id)
-        VALUES (#{id});
+        insert into dormitory_management_system.building_info(building_id, update_time)
+        VALUES (#{id}, now());
     </insert>
 
+    <select id="getBuildingInfo">
+        select *
+        from dormitory_management_system.view_get_all_building_info
+        where id = #{buildingId}
+    </select>
+
+    <update id="updateBuildingInfo">
+        update dormitory_management_system.building,dormitory_management_system.building_info
+        set name=#{name},manager_id=#{manId},unit_number=#{unitNumber},
+            build_year=#{buildYear},introduction=#{introduction},picture=#{picture},
+            update_time=now(),floor_number=#{floorNumber}
+        where id=#{id} and building_id = #{id}
+    </update>
 </mapper>

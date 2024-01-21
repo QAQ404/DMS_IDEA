@@ -5,10 +5,9 @@ import com.example.dms_idea.pojo.PageBean;
 import com.example.dms_idea.pojo.Result;
 import com.example.dms_idea.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @RestController
@@ -35,5 +34,17 @@ public class BuildingController {
         buildingService.addBuildingInfo(id);
 
         return Result.success("添加成功");
+    }
+
+    @GetMapping("/getBuildingInfo") //获取某个宿舍楼的详细信息
+    public Result<Building> getBuildingInfo(String buildingId){
+        Building building = buildingService.getBuildingInfo(buildingId);
+        return Result.success(building);
+    }
+
+    @PutMapping("/updateBuildingInfo")  //修改宿舍楼信息
+    public Result updateBuildingInfo(@RequestBody Map<String,Object> map){
+        buildingService.updateBuildingInfo(map);
+        return Result.success("修改成功");
     }
 }
