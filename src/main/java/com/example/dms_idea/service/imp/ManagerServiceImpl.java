@@ -19,4 +19,15 @@ public class ManagerServiceImpl implements ManagerService {
     public List<Map<String,Object>> getAllManagerName() {
         return managerMapper.getAllManagerName();
     }
+
+    @Override
+    public void addBuildingNumber(String managerId,int num) {
+        managerMapper.addBuildingNumber(managerId,num);
+    }
+
+    @Override
+    public void addBuildingNumber(int managerId,int num) {
+        managerMapper.addBuildingNumber(managerId,num);
+    }
+
 }

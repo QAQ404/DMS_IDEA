@@ -20,14 +20,15 @@ public class BuildingServiceImpl implements BuildingService {
     private BuildingMapper buildingMapper;
 
     @Override
-    public PageBean<Building> getBuildingList(int pageNum, int pageSize) {
+    public PageBean<Building> getBuildingList(int pageNum, int pageSize, String prop, String order, String name, String unit_number, String dor_number, String stu_number, String manager_id) {
         Map<String, Object> map = ThreadLocalUtil.get();
         int id = (int) map.get("id");
 
         PageBean<Building> pageBean = new PageBean<>();
         PageHelper.startPage(pageNum, pageSize);
 
-        List<Building> list = buildingMapper.getBuildingList();
+        List<Building> list = buildingMapper.getBuildingList(prop,order,name,unit_number,dor_number,stu_number,manager_id);
+
         Page<Building> pageBeanList = (Page<Building>) list;
 
         pageBean.setTotal(pageBeanList.getTotal());
@@ -37,7 +38,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public String ifNameHave(String name) {
+    public Map<String,Object> ifNameHave(String name) {
         return  buildingMapper.ifNameHave(name);
     }
 
@@ -47,7 +48,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public void addBuildingInfo(String id) {
+    public void addBuildingInfo(int id) {
         buildingMapper.addBuildingInfo(id);
     }
 

@@ -7,5 +7,11 @@
         where id = manager.user_id
     </select>
 
+    <update id="addBuildingNumber">
+        update dormitory_management_system.manager
+        set building_number = building_number+#{num}
+        where user_id = #{managerId}
+    </update>
+
 
 </mapper>

@@ -6,10 +6,21 @@
     <select id="getBuildingList">
         select *
         from dormitory_management_system.view_get_all_building_manager
+
+        <where>
+            <if test="name!=null">and name like concat('%',#{name},'%')</if>
+            <if test="unit_number!=null">and unit_number = #{unit_number}</if>
+            <if test="dor_number!=null">and dor_number >= #{dor_number}</if>
+            <if test="stu_number!=null">and stu_number >= #{stu_number}</if>
+            <if test="manager_id!=null">and manager_id = #{manager_id}</if>
+        </where>
+        <if test="prop!=null">
+            order by ${prop} ${order}
+        </if>
     </select>
 
     <select id="ifNameHave">
-        select id
+        select id, name
         from dormitory_management_system.building
         where name = #{name}
     </select>
@@ -32,9 +43,16 @@
 
     <update id="updateBuildingInfo">
         update dormitory_management_system.building,dormitory_management_system.building_info
-        set name=#{name},manager_id=#{manId},unit_number=#{unitNumber},
-            build_year=#{buildYear},introduction=#{introduction},picture=#{picture},
-            update_time=now(),floor_number=#{floorNumber}
-        where id=#{id} and building_id = #{id}
+        set name=#{name},
+            manager_id=#{manId},
+            unit_number=#{unitNumber},
+            build_year=#{buildYear},
+            introduction=#{introduction},
+            picture=#{picture},
+            update_time=now(),
+            floor_number=#{floorNumber}
+        where id = #{id}
+          and building_id = #{id}
     </update>
+
 </mapper>

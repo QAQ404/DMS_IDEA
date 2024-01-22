@@ -7,13 +7,13 @@ import java.util.Map;
 
 public interface BuildingService {
 
-    PageBean<Building> getBuildingList(int pageNum, int pageSize);
+    PageBean<Building> getBuildingList(int pageNum, int pageSize, String prop, String order, String name, String unit_number, String dor_number, String stu_number, String manager_id);
 
-    String ifNameHave(String name);
+    Map<String,Object> ifNameHave(String name);
 
     void addBuilding(String name, String valueOf, String valueOf1);
 
-    void addBuildingInfo(String id);
+    void addBuildingInfo(int id);
 
     Building getBuildingInfo(String buildingId);
 

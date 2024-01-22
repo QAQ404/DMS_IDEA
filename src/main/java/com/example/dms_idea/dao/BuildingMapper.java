@@ -9,13 +9,13 @@ import java.util.Map;
 @Mapper
 public interface BuildingMapper {
 
-    List<Building> getBuildingList();
+    List<Building> getBuildingList(String prop, String order, String name, String unit_number, String dor_number, String stu_number, String manager_id);
 
-    String ifNameHave(String name);
+    Map<String,Object> ifNameHave(String name);
 
     void addBuilding(String name, String unitNumber, String managerId);
 
-    void addBuildingInfo(String id);
+    void addBuildingInfo(int id);
 
     Building getBuildingInfo(String buildingId);
 
