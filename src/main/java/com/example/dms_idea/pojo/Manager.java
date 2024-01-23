@@ -16,4 +16,5 @@ public class Manager {
     private String email;
     private int buildingNumber;
     private String workId;
+    private String username;
 }

@@ -7,4 +7,10 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper {
 
     User getUser(String username, String password);
+
+    User ifUsernameHave(String username);
+
+    void addUser(String username, String password, String name, int role);
+
+    String getUserIdByUsername(String username);
 }

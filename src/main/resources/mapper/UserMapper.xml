@@ -8,5 +8,16 @@
             where username=#{username} and password=#{password}
     </select>
 
+    <select id="ifUsernameHave">
+        select * from dormitory_management_system.user where username = #{username}
+    </select>
 
+    <insert id="addUser">
+        insert into dormitory_management_system.user(username, password, role, name)
+        VALUES (#{username},#{password},#{role},#{name})
+    </insert>
+
+    <select id="getUserIdByUsername">
+        select id from dormitory_management_system.user where username = #{username}
+    </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.example.dms_idea.service;
 
 import com.example.dms_idea.pojo.Manager;
+import com.example.dms_idea.pojo.PageBean;
 
 import java.util.List;
 import java.util.Map;
@@ -12,4 +13,9 @@ public interface ManagerService {
 
     void addBuildingNumber(int managerId,int num);
 
+    PageBean<Manager> getManagerList(int pageNum, int pageSize, String prop, String order);
+
+    boolean ifWorkIdHave(String workId);
+
+    void addManager(String userId,String workId);
 }

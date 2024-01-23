@@ -3,15 +3,32 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dms_idea.dao.ManagerMapper">
     <select id="getAllManagerName">
-        select id,name,work_id as workId from dormitory_management_system.manager , dormitory_management_system.user
+        select id, name, work_id as workId
+        from dormitory_management_system.manager,
+             dormitory_management_system.user
         where id = manager.user_id
     </select>
 
     <update id="addBuildingNumber">
         update dormitory_management_system.manager
-        set building_number = building_number+#{num}
+        set building_number = building_number + #{num}
         where user_id = #{managerId}
     </update>
 
+    <select id="getManagerList">
+        select *
+        from dormitory_management_system.view_get_all_manager_list
+        <if test="prop!=null">
+            order by ${prop} ${order}
+        </if>
+    </select>
 
+    <select id="ifWorkIdHave">
+        select user_id from dormitory_management_system.manager where work_id = #{workId}
+    </select>
+
+    <insert id="addManager">
+        insert into dormitory_management_system.manager(user_id,work_id)
+        VALUES (#{userId},#{workId})
+    </insert>
 </mapper>

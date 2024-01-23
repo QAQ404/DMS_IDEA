@@ -21,8 +21,8 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public PageBean<Building> getBuildingList(int pageNum, int pageSize, String prop, String order, String name, String unit_number, String dor_number, String stu_number, String manager_id) {
-        Map<String, Object> map = ThreadLocalUtil.get();
-        int id = (int) map.get("id");
+//        Map<String, Object> map = ThreadLocalUtil.get();
+//        int id = (int) map.get("id");
 
         PageBean<Building> pageBean = new PageBean<>();
         PageHelper.startPage(pageNum, pageSize);
