@@ -7,4 +7,12 @@ public interface UserService {
     User getUser(String username, String password);
 
     Result addUser(String username, String password, String name, int role);
+
+    void updateName(int id, String name);
+
+    void updatePassword(String id, String password);
+
+    int getUserRoleById(String id);
+
+    void deleteUserById(String id);
 }

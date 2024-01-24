@@ -13,9 +13,15 @@ public interface ManagerService {
 
     void addBuildingNumber(int managerId,int num);
 
-    PageBean<Manager> getManagerList(int pageNum, int pageSize, String prop, String order);
+    PageBean<Manager> getManagerList(int pageNum, int pageSize, String prop, String order, String name, String gender, String workId);
 
     boolean ifWorkIdHave(String workId);
 
     void addManager(String userId,String workId);
+
+    void updateManager(Manager manager);
+
+    Manager getManagerById(String id);
+
+    void deleteManagerById(String id);
 }

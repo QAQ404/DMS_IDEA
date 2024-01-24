@@ -27,4 +27,24 @@ public class UserServiceImpl implements UserService {
             return Result.success(id);
         } else return Result.error("账号已存在");
     }
+
+    @Override
+    public void updateName(int id, String name) {
+        userMapper.updateName(id,name);
+    }
+
+    @Override
+    public void updatePassword(String id, String password) {
+        userMapper.updatePassword(id,DigestUtils.md5DigestAsHex(password.getBytes()));
+    }
+
+    @Override
+    public int getUserRoleById(String id) {
+        return userMapper.getUserRoleById(id);
+    }
+
+    @Override
+    public void deleteUserById(String id) {
+        userMapper.deleteUserById(id);
+    }
 }

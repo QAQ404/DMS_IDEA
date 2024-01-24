@@ -4,20 +4,47 @@
 <mapper namespace="com.example.dms_idea.dao.UserMapper">
 
     <select id="getUser">
-            select id,role,name from dormitory_management_system.user
-            where username=#{username} and password=#{password}
+        select id, role, name
+        from dormitory_management_system.user
+        where username = #{username}
+          and password = #{password}
     </select>
 
     <select id="ifUsernameHave">
-        select * from dormitory_management_system.user where username = #{username}
+        select *
+        from dormitory_management_system.user
+        where username = #{username}
     </select>
 
     <insert id="addUser">
         insert into dormitory_management_system.user(username, password, role, name)
-        VALUES (#{username},#{password},#{role},#{name})
+        VALUES (#{username}, #{password}, #{role}, #{name})
     </insert>
 
     <select id="getUserIdByUsername">
-        select id from dormitory_management_system.user where username = #{username}
+        select id
+        from dormitory_management_system.user
+        where username = #{username}
     </select>
+
+    <update id="updateName">
+        update dormitory_management_system.user
+        set name = #{name}
+        where id = #{id}
+    </update>
+
+    <update id="updatePassword">
+        update dormitory_management_system.user
+        set password=#{password}
+        where id=#{id}
+    </update>
+
+    <select id="getUserRoleById">
+        select role from dormitory_management_system.user where id=#{id}
+    </select>
+
+    <delete id="deleteUserById">
+        delete from dormitory_management_system.user
+        where id=#{id}
+    </delete>
 </mapper>

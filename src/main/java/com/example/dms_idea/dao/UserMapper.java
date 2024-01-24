@@ -13,4 +13,12 @@ public interface UserMapper {
     void addUser(String username, String password, String name, int role);
 
     String getUserIdByUsername(String username);
+
+    void updateName(int id, String name);
+
+    void updatePassword(String id, String password);
+
+    void deleteUserById(String id);
+
+    int getUserRoleById(String id);
 }

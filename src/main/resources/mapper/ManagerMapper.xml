@@ -18,17 +18,40 @@
     <select id="getManagerList">
         select *
         from dormitory_management_system.view_get_all_manager_list
+        <where>
+            <if test="name!=null">and name like concat('%',#{name},'%')</if>
+            <if test="gender!=null">and gender = #{gender}</if>
+            <if test="workId!=null">and work_id like concat('%',#{workId},'%')</if>
+        </where>
         <if test="prop!=null">
             order by ${prop} ${order}
         </if>
     </select>
 
     <select id="ifWorkIdHave">
-        select user_id from dormitory_management_system.manager where work_id = #{workId}
+        select user_id
+        from dormitory_management_system.manager
+        where work_id = #{workId}
     </select>
 
     <insert id="addManager">
-        insert into dormitory_management_system.manager(user_id,work_id)
-        VALUES (#{userId},#{workId})
+        insert into dormitory_management_system.manager(user_id, work_id)
+        VALUES (#{userId}, #{workId})
     </insert>
+
+    <update id="updateManager">
+        update dormitory_management_system.manager
+        set gender=#{gender},phone=#{phone},picture=#{picture},
+            email=#{email},work_id=#{workId}
+        where user_id = #{id}
+    </update>
+
+    <select id="getManagerById">
+        select  * from dormitory_management_system.view_get_all_manager_list where id=#{id}
+    </select>
+
+    <delete id="deleteManagerById">
+        delete from dormitory_management_system.manager
+        where user_id=#{id}
+    </delete>
 </mapper>

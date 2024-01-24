@@ -34,11 +34,11 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public PageBean<Manager> getManagerList(int pageNum, int pageSize, String prop, String order) {
+    public PageBean<Manager> getManagerList(int pageNum, int pageSize, String prop, String order, String name, String gender, String workId) {
         PageBean<Manager> pageBean = new PageBean<>();
         PageHelper.startPage(pageNum, pageSize);
 
-        List<Manager> list = managerMapper.getManagerList(prop,order);
+        List<Manager> list = managerMapper.getManagerList(prop,order,name,gender,workId);
 
         Page<Manager> pageBeanList = (Page<Manager>) list;
 
@@ -57,6 +57,21 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public void addManager(String userId,String workId) {
         managerMapper.addManager(userId,workId);
+    }
+
+    @Override
+    public void updateManager(Manager manager) {
+        managerMapper.updateManager(manager);
+    }
+
+    @Override
+    public Manager getManagerById(String id) {
+        return managerMapper.getManagerById(id);
+    }
+
+    @Override
+    public void deleteManagerById(String id) {
+        managerMapper.deleteManagerById(id);
     }
 
 }

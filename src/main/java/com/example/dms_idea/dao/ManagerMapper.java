@@ -14,9 +14,15 @@ public interface ManagerMapper {
 
     void addBuildingNumber(int managerId,int num);
 
-    List<Manager> getManagerList(String prop, String order);
+    List<Manager> getManagerList(String prop, String order, String name, String gender, String workId);
 
     String ifWorkIdHave(String workId);
 
     void addManager(String userId, String workId);
+
+    void updateManager(Manager manager);
+
+    Manager getManagerById(String id);
+
+    void deleteManagerById(String id);
 }

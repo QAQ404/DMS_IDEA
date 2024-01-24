@@ -1,6 +1,5 @@
 package com.example.dms_idea.controller;
 
-import com.example.dms_idea.pojo.Building;
 import com.example.dms_idea.pojo.Manager;
 import com.example.dms_idea.pojo.PageBean;
 import com.example.dms_idea.pojo.Result;
@@ -29,27 +28,27 @@ public class ManagerController {
         List<Map<String, Object>> list = managerService.getAllManagerName();
 
         List<Map<String, Object>> ans = new ArrayList<>();
-        for(Map item : list){
+        for (Map item : list) {
             String name = (String) item.get("name");
             int id = (int) item.get("id");
             String workId = (String) item.get("workId");
-            Map<String,Object> res = new HashMap<>();
-            res.put("label","编号"+workId+"-"+name);
-            res.put("value",id);
+            Map<String, Object> res = new HashMap<>();
+            res.put("label", "编号" + workId + "-" + name);
+            res.put("value", id);
             ans.add(res);
         }
         return Result.success(ans);
     }
 
     @PatchMapping("/changeBuildingNumber") //oldV的管理员-1，newV的管理员+1
-    public Result changeBuildingNumber(int oldV,int newV){
-        managerService.addBuildingNumber(oldV,-1);
-        managerService.addBuildingNumber(newV,1);
+    public Result changeBuildingNumber(int oldV, int newV) {
+        managerService.addBuildingNumber(oldV, -1);
+        managerService.addBuildingNumber(newV, 1);
         return Result.success();
     }
 
     @PostMapping("/getManagerList")
-    public Result<PageBean<Manager>> getManagerList(@RequestBody Map<String,Object>map){
+    public Result<PageBean<Manager>> getManagerList(@RequestBody Map<String, Object> map) {
 
         int pageNum = (int) map.get("pageNum");
         int pageSize = (int) map.get("pageSize");
@@ -58,46 +57,82 @@ public class ManagerController {
         if (prop != null && order != null) {
             if (order.equals("ascending")) order = "asc";
             else if (order.equals("descending")) order = "desc";
-            if(prop.equals("buildingNumber")) prop = "building_number";
-            else if(prop.equals("workId")) prop = "work_id";
+            if (prop.equals("buildingNumber")) prop = "building_number";
+            else if (prop.equals("workId")) prop = "work_id";
         }
-        PageBean<Manager> pageBean = managerService.getManagerList(pageNum,pageSize,prop,order);
+        String name = (String) map.get("name");
+        String workId = (String) map.get("workId");
+        String gender = (String) map.get("gender");
+        PageBean<Manager> pageBean = managerService.getManagerList(pageNum, pageSize, prop, order,name,gender,workId);
         return Result.success(pageBean);
     }
 
+    @GetMapping("/getManagerById")
+    public Result<Manager> getManagerById(String id){
+        Manager manager = managerService.getManagerById(id);
+        return Result.success(manager);
+    }
+
     @PostMapping("/addManager")
-    public Result addManager(String name,String password,String rePassword,String username,String workId){
-        if(true){
-            if(name == null || password == null || rePassword == null || username == null || workId == null) return  Result.error("输入不能为空");
-            if(name == "" || password == "" || rePassword == "" || username == "" || workId == "") return  Result.error("输入不能为空");
-            if(!password.equals(rePassword) ) return Result.error("两次密码输入不一致");
-            if(username.length()>20) return Result.error("账号长度需不超过20位");
-            if(password.length()>32) return Result.error("密码长度需不超过32位");
-            if(name.length()>20) return Result.error("姓名长度需不超过20位");
-            if(workId.length()>20) return Result.error("工作编号需不超过20位");
+    public Result addManager(String name, String password, String rePassword, String username, String workId) {
+        if (true) {
+            if (name == null || password == null || rePassword == null || username == null || workId == null)
+                return Result.error("输入不能为空");
+            if (name == "" || password == "" || rePassword == "" || username == "" || workId == "")
+                return Result.error("输入不能为空");
+            if (!password.equals(rePassword)) return Result.error("两次密码输入不一致");
+            if (username.length() > 20) return Result.error("账号长度需不超过20位");
+            if (password.length() > 32) return Result.error("密码长度需不超过32位");
+            if (name.length() > 20) return Result.error("姓名长度需不超过20位");
+            if (workId.length() > 20) return Result.error("工作编号需不超过20位");
         }
 
-        if(managerService.ifWorkIdHave(workId)) return Result.error("工作编号已存在");
+        if (managerService.ifWorkIdHave(workId)) return Result.error("工作编号已存在");
 
-        Result result = userService.addUser(username,password,name,2);
-        if(result.getCode() == 0) {
-            managerService.addManager((String) result.getData(),workId);
+        Result result = userService.addUser(username, password, name, 2);
+        if (result.getCode() == 0) {
+            managerService.addManager((String) result.getData(), workId);
             return Result.success();
-        }else{
+        } else {
             return Result.error(result.getMessage());
         }
     }
 
     @PutMapping("/updateManager")
-    public Result updateManager(@RequestBody Manager manager,String old){
-        if(true){
-            if(manager.getName() == null || manager.getWorkId() == null) return Result.error("编号和姓名不能为空");
-            if(manager.getName() == "" || manager.getWorkId() == "") return Result.error("编号和姓名不能为空");
-            if(manager.getName().length()>20) return Result.error("姓名长度需不超过20位");
-            if(manager.getWorkId().length()>20) return Result.error("工作编号需不超过20位");
-            if(manager.getPhone().length() > 11) return Result.error("手机号码长度不能超过11位");
-            if(manager.getPhone().length() > 128) return Result.error("邮箱长度需小于128位");
+    public Result updateManager(@RequestBody Manager manager, String old) {
+        if (true) {
+            if (manager.getName() == null || manager.getWorkId() == null) return Result.error("编号和姓名不能为空");
+            if (manager.getName() == "" || manager.getWorkId() == "") return Result.error("编号和姓名不能为空");
+            if (manager.getName().length() > 20) return Result.error("姓名长度需不超过20位");
+            if (manager.getWorkId().length() > 20) return Result.error("工作编号需不超过20位");
+            if (manager.getPhone() != null && manager.getPhone().length() > 11) return Result.error("手机号码长度不能超过11位");
+            if (manager.getEmail() != null && manager.getEmail().length() > 128) return Result.error("邮箱长度需小于128位");
+            if (!old.equals(manager.getWorkId()) && managerService.ifWorkIdHave(manager.getWorkId()))
+                return Result.error("该工作编号已存在");
         }
+
+        userService.updateName(manager.getId(),manager.getName());
+        managerService.updateManager(manager);
         return Result.success();
     }
+
+    @PatchMapping("/updatePassword")
+    public Result updatePassword(String id,String password,String rePassword){
+        if(password == null || rePassword == null || password == "" || rePassword == "") return Result.error("输入不能为空");
+        if(!password.equals(rePassword)) return Result.error("两次密码输入不一致");
+        userService.updatePassword(id,password);
+        return Result.success();
+    }
+
+    @GetMapping("/deleteManager")
+    public Result deleteManager(String id){
+        int role = userService.getUserRoleById(id);
+        if(role == 3) return Result.error("不能删除系统管理员");
+        Manager manager = managerService.getManagerById(id);
+        if(manager.getBuildingNumber() > 0) return Result.error("该宿管仍在管理楼栋");
+        managerService.deleteManagerById(id);
+        userService.deleteUserById(id);
+        return Result.success();
+    }
+
 }
