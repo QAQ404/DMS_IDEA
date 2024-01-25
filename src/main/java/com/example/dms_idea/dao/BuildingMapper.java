@@ -20,4 +20,20 @@ public interface BuildingMapper {
     Building getBuildingInfo(String buildingId);
 
     void updateBuildingInfo(Map<String, Object> map);
+
+    List<Map<String,Object>> getOnlyName();
+
+    Map<String, Integer> getUnitAndFloor(String id);
+
+    Map<String, Integer> getUnitAndFloor(Integer id);
+
+    void addDormitoryNumber(int buildingId, int num);
+
+    int getdorNumber(String id);
+
+    int getManId(String id);
+
+    void deleteBuildingInfo(String id);
+
+    void deleteBuilding(String id);
 }

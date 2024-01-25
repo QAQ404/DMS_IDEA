@@ -19,6 +19,7 @@ public class Building {
     private int stuNumber; //宿舍楼学生数
     private int manId; //宿管id
     private String manName; //宿管名字
+    private String workId; //宿管编号
     private Date buildYear;   //宿舍楼建设日期
     private String introduction;    //宿舍楼的介绍
     private String picture;     //宿舍楼的照片

@@ -55,4 +55,46 @@
           and building_id = #{id}
     </update>
 
+    <select id="getOnlyName">
+        select id, name
+        from dormitory_management_system.building
+    </select>
+
+    <select id="getUnitAndFloor">
+        select unit_number as unitNumber, floor_number as floorNumber
+        from dormitory_management_system.building,
+             dormitory_management_system.building_info
+        where id = #{id}
+          and id = building_info.building_id
+    </select>
+
+    <update id="addDormitoryNumber">
+        update dormitory_management_system.building
+        set dor_number = dor_number + #{num}
+        where id = #{buildingId}
+    </update>
+
+    <select id="getdorNumber">
+        select dor_number
+        from dormitory_management_system.building
+        where id = #{id}
+    </select>
+
+    <select id="getManId">
+        select manager_id
+        from dormitory_management_system.building
+        where id = #{id}
+    </select>
+
+    <delete id="deleteBuildingInfo">
+        delete
+        from dormitory_management_system.building_info
+        where building_id = #{id}
+    </delete>
+
+    <delete id="deleteBuilding">
+        delete
+        from dormitory_management_system.building
+        where id = #{id}
+    </delete>
 </mapper>

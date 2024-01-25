@@ -3,4 +3,29 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dms_idea.dao.DormitoryMapper">
 
+    <select id="getManagerList">
+        select *
+        from dormitory_management_system.view_get_all_dormitory_list
+        <if test="prop!=null">
+            order by ${prop} ${order}
+        </if>
+    </select>
+
+    <insert id="addDormitory">
+        insert into dormitory_management_system.dormitory(building_id, name, bed_number, update_time, unit_number, floor_number)
+        VALUES (#{buildingId}, #{name}, #{bedNumber}, now(), #{unitNumber}, #{floorNumber})
+    </insert>
+
+    <select id="ifDormitoryNameHaveInTheSameUnitAndFloor">
+        select count(*)
+        from dormitory_management_system.dormitory
+        where name = #{name} and building_id = #{buildingId}
+          and unit_number = #{unitNumber} and floor_number = #{floorNumber}
+    </select>
+
+    <select id="getMaxUnitAndFloor">
+        select Max(unit_number) as unitNumber,MAX(floor_number) as floorNumber
+        from dormitory_management_system.dormitory
+        where building_id=#{id}
+    </select>
 </mapper>

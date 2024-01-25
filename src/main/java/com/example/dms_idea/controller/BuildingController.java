@@ -4,10 +4,14 @@ import com.example.dms_idea.pojo.Building;
 import com.example.dms_idea.pojo.PageBean;
 import com.example.dms_idea.pojo.Result;
 import com.example.dms_idea.service.BuildingService;
+import com.example.dms_idea.service.DormitoryService;
 import com.example.dms_idea.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -20,6 +24,23 @@ public class BuildingController {
 
     @Autowired
     private ManagerService managerService;
+
+    @Autowired
+    private DormitoryService dormitoryService;
+
+    @GetMapping("/getOnlyName") //获取全部宿舍楼的名字
+    public Result<List<Map<String, Object>>> getOnlyName() {
+        List<Map<String, Object>> list = buildingService.getOnlyName();
+        List<Map<String, Object>> ans = new ArrayList<>();
+        for (Map item : list) {
+            Map<String, Object> res = new HashMap<>();
+            res.put("label", item.get("name"));
+            res.put("value", item.get("id"));
+            ans.add(res);
+        }
+
+        return Result.success(ans);
+    }
 
     @GetMapping("/getBuildingList") //获取宿舍楼栋相关信息
     public Result<PageBean<Building>> getBuildingList(int pageNum, int pageSize, @RequestParam(required = false) String prop, @RequestParam(required = false) String order, @RequestParam(required = false) String name, @RequestParam(required = false) String unit_number, @RequestParam(required = false) String dor_number, @RequestParam(required = false) String stu_number, String manager_id) {
@@ -66,6 +87,11 @@ public class BuildingController {
         if (name.length() == 0) return Result.error("楼栋名称不能为空");
         Map<String, Object> map1 = buildingService.ifNameHave(name);
         if (map1 != null && id != (int) map1.get("id")) return Result.error("宿舍楼名字已存在");
+        Map<String, Integer> res = dormitoryService.getMaxUnitAndFloor(id);
+        if (res.get("msg") == 0) {
+            if (res.get("unitNumber") > (Integer) map.get("unitNumber"))  return Result.error("单元数不能小于该楼现存寝室中的单元最大值");
+            if (res.get("floorNumber") > (Integer) map.get("floorNumber")) return Result.error("楼层数不能小于该楼现存寝室中的楼层最高值");
+        }
 
         buildingService.updateBuildingInfo(map);
 
@@ -75,7 +101,18 @@ public class BuildingController {
     @DeleteMapping("/deleteBuilding")   //删除宿舍楼
     public Result deleteBuilding(String id) {
         //删除涉及到宿舍和学生，先不写
-
-        return Result.success(id);
+        int dorNumber = buildingService.getdorNumber(id);
+        if(dorNumber > 0) return Result.error("该宿舍楼仍存在寝室");
+        int manId = buildingService.getManId(id);
+        buildingService.deleteBuilding(id);
+        managerService.addBuildingNumber(manId,-1);
+        return Result.success();
     }
+
+    @GetMapping("/getUnitAndFloor") //获取某楼的单元数和楼层数
+    public Result<Map<String, Integer>> getUnitAndFloor(String id) {
+        Map<String, Integer> map = buildingService.getUnitAndFloor(id);
+        return Result.success(map);
+    }
+
 }

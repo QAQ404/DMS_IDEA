@@ -27,7 +27,7 @@ public class BuildingServiceImpl implements BuildingService {
         PageBean<Building> pageBean = new PageBean<>();
         PageHelper.startPage(pageNum, pageSize);
 
-        List<Building> list = buildingMapper.getBuildingList(prop,order,name,unit_number,dor_number,stu_number,manager_id);
+        List<Building> list = buildingMapper.getBuildingList(prop, order, name, unit_number, dor_number, stu_number, manager_id);
 
         Page<Building> pageBeanList = (Page<Building>) list;
 
@@ -38,8 +38,8 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public Map<String,Object> ifNameHave(String name) {
-        return  buildingMapper.ifNameHave(name);
+    public Map<String, Object> ifNameHave(String name) {
+        return buildingMapper.ifNameHave(name);
     }
 
     @Override
@@ -60,5 +60,41 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public void updateBuildingInfo(Map<String, Object> map) {
         buildingMapper.updateBuildingInfo(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> getOnlyName() {
+        return buildingMapper.getOnlyName();
+    }
+
+    @Override
+    public Map<String, Integer> getUnitAndFloor(String id) {
+        return buildingMapper.getUnitAndFloor(id);
+    }
+
+    @Override
+    public Map<String, Integer> getUnitAndFloor(Integer id) {
+        return buildingMapper.getUnitAndFloor(id);
+    }
+
+    @Override
+    public void addDormitoryNumber(int buildingId, int num) {
+        buildingMapper.addDormitoryNumber(buildingId, num);
+    }
+
+    @Override
+    public int getdorNumber(String id) {
+        return buildingMapper.getdorNumber(id);
+    }
+
+    @Override
+    public int getManId(String id) {
+        return buildingMapper.getManId(id);
+    }
+
+    @Override
+    public void deleteBuilding(String id) {
+        buildingMapper.deleteBuildingInfo(id);
+        buildingMapper.deleteBuilding(id);
     }
 }
