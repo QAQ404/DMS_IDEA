@@ -8,7 +8,7 @@ import com.example.dms_idea.service.DormitoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,7 +36,7 @@ public class DormitoryController {
             else if (prop.equals("stuNumber")) prop = "stu_number";
             else if (prop.equals("manName")) prop = "man_name";
         }
-        PageBean<Dormitory> pageBean = dormitoryService.getDormitoryList(pageNum, pageSize, prop, order);
+        PageBean<Dormitory> pageBean = dormitoryService.getDormitoryList(pageNum, pageSize, prop, order,map);
         return Result.success(pageBean);
     }
 
@@ -65,5 +65,51 @@ public class DormitoryController {
         return Result.success(map);
     }
 
+    @GetMapping("/getDormitoryById") //通过id查找寝室
+    public Result<Dormitory> getDormitoryById(int id){
+        Dormitory dormitory = dormitoryService.getDormitoryById(id);
+        return Result.success(dormitory);
+    }
 
+    @PutMapping("/updateDormitory") //更新寝室信息
+    public Result updateDormitory(@RequestBody Dormitory dormitory){
+        Dormitory old = dormitoryService.getDormitoryById(dormitory.getId());
+        if(!old.getName().equals(dormitory.getName()) || old.getFloorNumber()!=dormitory.getFloorNumber() || old.getUnitNumber()!=dormitory.getUnitNumber() || old.getBuildingId() != dormitory.getBuildingId()){
+            if (dormitoryService.ifDormitoryNameHaveInTheSameUnitAndFloor(dormitory.getName(), dormitory.getUnitNumber()
+                    , dormitory.getFloorNumber(), dormitory.getBuildingId()) > 0) return Result.error("此楼栋的此单元的此楼层存在重名寝室");
+        }
+        buildingService.addDormitoryNumber(dormitory.getBuildingId(),1);
+        buildingService.addDormitoryNumber(old.getBuildingId(),-1);
+        dormitoryService.updateDormitory(dormitory);
+        return Result.success();
+    }
+
+    @DeleteMapping("/deleteDormitory") //删除寝室
+    public Result deleteDormitory(String id){
+        Dormitory dormitory = dormitoryService.getDormitoryById(id);
+        if(dormitory.getStuNumber()>0) return Result.error("删除失败,该宿舍内住着学生");
+        buildingService.addDormitoryNumber(dormitory.getBuildingId(),-1);
+        dormitoryService.deleteDormitory(id);
+        return Result.success();
+    }
+
+    @PostMapping("/checkDormitoryName") //查看某栋某单元某楼的全部寝室名称
+    public Result<List<String>> checkDormitoryName(@RequestBody Map<String,Integer> map){
+        List<String> res = dormitoryService.checkDormitoryName(map);
+        return Result.success(res);
+    }
+
+    @PostMapping("/addDormitoryMany") //批量添加寝室
+    public Result addDormitoryMany(@RequestBody Map<String,Object> map){
+        int bedNumber = (int) map.get("bedNumber");
+        int buildingId = (int) map.get("buildingId");
+        int floorNumber = (int) map.get("floorNumber");
+        int unitNumber = (int) map.get("unitNumber");
+        List<String> list = (List<String>) map.get("nameList");
+        for(String i : list){
+            dormitoryService.addDormitory(bedNumber,buildingId,floorNumber,i,unitNumber);
+            buildingService.addDormitoryNumber(buildingId,1);
+        }
+        return Result.success();
+    }
 }

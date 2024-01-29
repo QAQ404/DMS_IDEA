@@ -6,6 +6,15 @@
     <select id="getManagerList">
         select *
         from dormitory_management_system.view_get_all_dormitory_list
+        <where>
+            <if test="map.name!=null">and name like concat('%',#{map.name},'%')</if>
+            <if test="map.unitNumber!=null">and unit_number = #{map.unitNumber}</if>
+            <if test="map.buildingId!=null">and building_id=#{map.buildingId}</if>
+            <if test="map.floorNumber!=null">and floor_number=#{map.floorNumber}</if>
+            <if test="map.stuNumber!=null">and stu_number=#{map.stuNumber}</if>
+            <if test="map.bedNumber!=null">and bed_number=#{map.bedNumber}</if>
+            <if test="map.managerId!=null">and manager_id=#{map.managerId}</if>
+        </where>
         <if test="prop!=null">
             order by ${prop} ${order}
         </if>
@@ -19,13 +28,45 @@
     <select id="ifDormitoryNameHaveInTheSameUnitAndFloor">
         select count(*)
         from dormitory_management_system.dormitory
-        where name = #{name} and building_id = #{buildingId}
-          and unit_number = #{unitNumber} and floor_number = #{floorNumber}
+        where name = #{name}
+          and building_id = #{buildingId}
+          and unit_number = #{unitNumber}
+          and floor_number = #{floorNumber}
     </select>
 
     <select id="getMaxUnitAndFloor">
-        select Max(unit_number) as unitNumber,MAX(floor_number) as floorNumber
+        select Max(unit_number) as unitNumber, MAX(floor_number) as floorNumber
         from dormitory_management_system.dormitory
-        where building_id=#{id}
+        where building_id = #{id}
+    </select>
+
+    <select id="getDormitoryById">
+        select *
+        from dormitory_management_system.view_get_all_dormitory_list
+        where id = #{id}
+    </select>
+
+    <update id="updateDormitory">
+        update dormitory_management_system.dormitory
+        set name=#{name},
+            unit_number=#{unitNumber},
+            floor_number=#{floorNumber},
+            bed_number=#{bedNumber},
+            picture=#{picture},
+            update_time=now(),
+            building_id=#{buildingId}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDormitory">
+        delete
+        from dormitory_management_system.dormitory
+        where id = #{id}
+    </delete>
+
+    <select id="checkDormitoryName">
+        select  name
+        from dormitory_management_system.dormitory
+        where building_id=#{buildingId} and unit_number = #{unitNumber} and floor_number = #{floorNumber}
     </select>
 </mapper>

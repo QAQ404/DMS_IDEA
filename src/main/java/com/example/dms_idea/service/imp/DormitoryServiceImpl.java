@@ -2,7 +2,6 @@ package com.example.dms_idea.service.imp;
 
 import com.example.dms_idea.dao.DormitoryMapper;
 import com.example.dms_idea.pojo.Dormitory;
-import com.example.dms_idea.pojo.Manager;
 import com.example.dms_idea.pojo.PageBean;
 import com.example.dms_idea.service.DormitoryService;
 import com.github.pagehelper.Page;
@@ -21,11 +20,11 @@ public class DormitoryServiceImpl implements DormitoryService {
     private DormitoryMapper dormitoryMapper;
 
     @Override
-    public PageBean<Dormitory> getDormitoryList(int pageNum, int pageSize, String prop, String order) {
+    public PageBean<Dormitory> getDormitoryList(int pageNum, int pageSize, String prop, String order, Map<String, Object> map) {
         PageBean<Dormitory> pageBean = new PageBean<>();
         PageHelper.startPage(pageNum, pageSize);
 
-        List<Dormitory> list = dormitoryMapper.getManagerList(prop, order);
+        List<Dormitory> list = dormitoryMapper.getManagerList(prop, order,map);
 
         Page<Dormitory> pageBeanList = (Page<Dormitory>) list;
 
@@ -65,5 +64,29 @@ public class DormitoryServiceImpl implements DormitoryService {
             map.put("floorNumber",1);
         }else map.put("msg",0);
         return map;
+    }
+
+    @Override
+    public Dormitory getDormitoryById(int id) {
+        return dormitoryMapper.getDormitoryById(id);
+    }
+    @Override
+    public Dormitory getDormitoryById(String id) {
+        return dormitoryMapper.getDormitoryById(id);
+    }
+
+    @Override
+    public void updateDormitory(Dormitory dormitory) {
+        dormitoryMapper.updateDormitory(dormitory);
+    }
+
+    @Override
+    public void deleteDormitory(String id) {
+        dormitoryMapper.deleteDormitory(id);
+    }
+
+    @Override
+    public List<String> checkDormitoryName(Map<String, Integer> map) {
+        return dormitoryMapper.checkDormitoryName(map);
     }
 }

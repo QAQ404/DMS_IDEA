@@ -20,7 +20,7 @@ public class Dormitory {
     private LocalDateTime updateTime;
     private int floorNumber;
     private String picture;
-    private String buildingId;
+    private int buildingId;
     private String buildingName;
     private String manName;
     private String  workId;

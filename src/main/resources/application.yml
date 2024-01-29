@@ -23,6 +23,8 @@ mybatis:
   type-aliases-package: com.example.dms_idea.pojo
   configuration:
     map-underscore-to-camel-case: true
+    lazy-loading-enabled: true
+
 
 
 
