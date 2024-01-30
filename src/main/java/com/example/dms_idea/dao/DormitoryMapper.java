@@ -9,7 +9,7 @@ import java.util.Map;
 @Mapper
 public interface DormitoryMapper {
 
-    List<Dormitory> getManagerList(String prop, String order, Map<String, Object> map);
+    List<Dormitory> getDormitoryList(String prop, String order, Map<String, Object> map);
 
     void addDormitory(int bedNumber, int buildingId, int floorNumber, String name, int unitNumber);
 

@@ -24,7 +24,7 @@ public class DormitoryServiceImpl implements DormitoryService {
         PageBean<Dormitory> pageBean = new PageBean<>();
         PageHelper.startPage(pageNum, pageSize);
 
-        List<Dormitory> list = dormitoryMapper.getManagerList(prop, order,map);
+        List<Dormitory> list = dormitoryMapper.getDormitoryList(prop, order,map);
 
         Page<Dormitory> pageBeanList = (Page<Dormitory>) list;
 

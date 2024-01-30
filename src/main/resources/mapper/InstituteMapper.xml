@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dms_idea.dao.InstituteMapper">
+
+    <select id="getManagerList">
+        select *
+        from dormitory_management_system.institute
+        <where>
+            <if test="map.name!=null">and name like concat('%',#{map.name},'%')</if>
+            <if test="map.stuNumber!=null">and stu_number>=#{map.stuNumber}</if>
+            <if test="map.majorNumber!=null">and major_number>=#{map.majorNumber}</if>
+            <if test="map.clazzNumber!=null">and clazz_number>=#{map.clazzNumber}</if>
+        </where>
+        <if test="prop!=null">
+            order by ${prop} ${order}
+        </if>
+    </select>
+
+    <insert id="addInstitute">
+        insert into dormitory_management_system.institute(name) values (#{name})
+    </insert>
+
+    <select id="getInstituteByName">
+        select * from dormitory_management_system.institute where name=#{name}
+    </select>
+
+    <select id="getInstituteById">
+        select * from dormitory_management_system.institute where id=#{id}
+    </select>
+
+    <delete id="deleteInstitute">
+        delete from dormitory_management_system.institute where id=#{id}
+    </delete>
+
+    <update id="updateInstitute">
+        update dormitory_management_system.institute
+        set name=#{name}
+        where id=#{id}
+    </update>
+</mapper>
