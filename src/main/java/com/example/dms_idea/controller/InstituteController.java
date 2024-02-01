@@ -7,6 +7,9 @@ import com.example.dms_idea.service.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -62,5 +65,18 @@ public class InstituteController {
 
         instituteService.deleteInstitute(id);
         return Result.success();
+    }
+
+    @GetMapping("/getInstituteNameList")
+    public Result<List<Map<String,Object>>> getInstituteNameList(){
+        List<Institute> list = instituteService.getInstituteNameList();
+        List<Map<String,Object>> map = new ArrayList<>();
+        for(Institute i : list){
+            Map<String,Object> res = new HashMap<>();
+            res.put("label",i.getName());
+            res.put("value",i.getId());
+            map.add(res);
+        }
+        return Result.success(map);
     }
 }

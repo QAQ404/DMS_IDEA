@@ -23,7 +23,7 @@ public class InstituteServiceImpl implements InstituteService {
         PageBean<Institute> pageBean = new PageBean<>();
         PageHelper.startPage(pageNum, pageSize);
 
-        List<Institute> list = instituteMapper.getManagerList(prop, order,map);
+        List<Institute> list = instituteMapper.getInstituteList(prop, order,map);
 
         Page<Institute> pageBeanList = (Page<Institute>) list;
 
@@ -55,5 +55,15 @@ public class InstituteServiceImpl implements InstituteService {
     @Override
     public void updateInstitute(Institute institute) {
         instituteMapper.updateInstitute(institute);
+    }
+
+    @Override
+    public List<Institute> getInstituteNameList() {
+        return instituteMapper.getInstituteNameList();
+    }
+
+    @Override
+    public void addMajorNumber(Integer id, int i) {
+        instituteMapper.addMajorNumber(id,i);
     }
 }

@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dms_idea.dao.InstituteMapper">
 
-    <select id="getManagerList">
+    <select id="getInstituteList">
         select *
         from dormitory_management_system.institute
         <where>
@@ -36,6 +36,17 @@
     <update id="updateInstitute">
         update dormitory_management_system.institute
         set name=#{name}
+        where id=#{id}
+    </update>
+
+    <select id="getInstituteNameList">
+        select name,id
+        from dormitory_management_system.institute
+    </select>
+
+    <update id="addMajorNumber">
+        update dormitory_management_system.institute
+        set major_number = major_number + #{i}
         where id=#{id}
     </update>
 </mapper>

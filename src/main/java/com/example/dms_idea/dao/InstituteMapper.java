@@ -9,7 +9,7 @@ import java.util.Map;
 @Mapper
 public interface InstituteMapper {
 
-    List<Institute> getManagerList(String prop, String order, Map<String, Object> map);
+    List<Institute> getInstituteList(String prop, String order, Map<String, Object> map);
 
     void addInstitute(String name);
 
@@ -20,4 +20,8 @@ public interface InstituteMapper {
     void deleteInstitute(Integer id);
 
     void updateInstitute(Institute institute);
+
+    List<Institute> getInstituteNameList();
+
+    void addMajorNumber(Integer id, int i);
 }

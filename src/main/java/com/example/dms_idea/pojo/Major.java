@@ -9,4 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Major {
     private Integer id;
+    private String name;
+    private Integer clazzNumber;
+    private Integer stuNumber;
+    private String insName;
 }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dms_idea.dao.MajorMapper">
+
+    <select id="getManagerList">
+        select *
+        from dormitory_management_system.view_get_all_major_list
+        <where>
+            <if test="map.name!=null">and name like concat('%',#{map.name},'%')</if>
+            <if test="map.stuNumber!=null">and stu_number>=#{map.stuNumber}</if>
+            <if test="map.insName!=null">and ins_name=#{map.insName}</if>
+            <if test="map.clazzNumber!=null">and clazz_number>=#{map.clazzNumber}</if>
+        </where>
+        <if test="prop!=null">
+            order by ${prop} ${order}
+        </if>
+    </select>
+
+    <select id="getMajorByNameInsId">
+        select * from dormitory_management_system.view_get_all_major_list
+        where name=#{name} and ins_name = #{insName}
+    </select>
+
+    <insert id="addMajor">
+        insert into dormitory_management_system.major(name,ins_id)
+        VALUES (#{name},#{insId})
+    </insert>
+
+    <select id="getMajorById">
+        select * from dormitory_management_system.view_get_all_major_list
+        where id=#{id}
+    </select>
+
+    <update id="updateMajor">
+        update dormitory_management_system.major
+        set name=#{name}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteMajor">
+        delete from dormitory_management_system.major where id=#{id}
+    </delete>
+</mapper>
