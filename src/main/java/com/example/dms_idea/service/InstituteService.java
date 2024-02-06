@@ -22,4 +22,6 @@ public interface InstituteService {
     List<Institute> getInstituteNameList();
 
     void addMajorNumber(Integer id, int i);
+
+    void addClazzNumber(Integer id, int i);
 }

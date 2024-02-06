@@ -9,4 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Clazz {
     private Integer id;
+    private Integer name;
+    private Integer stuNumber;
+    private String majorName;
+    private String insName;
+    private Integer entranceYear;
 }

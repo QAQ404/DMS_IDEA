@@ -66,4 +66,9 @@ public class InstituteServiceImpl implements InstituteService {
     public void addMajorNumber(Integer id, int i) {
         instituteMapper.addMajorNumber(id,i);
     }
+
+    @Override
+    public void addClazzNumber(Integer id, int i) {
+        instituteMapper.addClazzNumber(id,i);
+    }
 }

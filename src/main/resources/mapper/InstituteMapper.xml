@@ -49,4 +49,10 @@
         set major_number = major_number + #{i}
         where id=#{id}
     </update>
+
+    <update id="addClazzNumber">
+        update dormitory_management_system.institute
+        set clazz_number = clazz_number + #{i}
+        where id=#{id}
+    </update>
 </mapper>

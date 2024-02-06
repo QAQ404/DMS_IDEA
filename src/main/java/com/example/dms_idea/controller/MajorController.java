@@ -9,6 +9,9 @@ import com.example.dms_idea.service.MajorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -41,7 +44,7 @@ public class MajorController {
     @PostMapping("/addMajor")
     public Result addMajor(String name,String insName){
         if(insName==null) return Result.error("学院不能为空");
-        Major major = majorService.getMajorByNameInsId(name,insName);
+        Major major = majorService.getMajorByNameInsName(name,insName);
         if(major != null) return Result.error("该学院已有此专业");
         Institute institute = instituteService.getInstituteByName(insName);
         majorService.addMajor(name,institute.getId());
@@ -49,9 +52,21 @@ public class MajorController {
         return Result.success();
     }
 
+    @GetMapping("/getMajorNameList")
+    public Result<List<Map<String,Object>>> getMajorNameList(String insName){
+        List<Major> list = majorService.getMajorNameList(insName);
+        List<Map<String,Object>> map = new ArrayList<>();
+        for(Major i : list){
+            Map<String,Object> res = new HashMap<>();
+            res.put("label",i.getName());
+            res.put("value",i.getId());
+            map.add(res);
+        }
+        return Result.success(map);
+    }
     @PutMapping("/updateMajor")
     public Result updateMajor(@RequestBody Major major){
-        Major maj = majorService.getMajorByNameInsId(major.getName(),major.getInsName());
+        Major maj = majorService.getMajorByNameInsName(major.getName(),major.getInsName());
         if(maj!=null) return Result.error("该学院已存在此专业");
        majorService.updateMajor(major);
         return Result.success();

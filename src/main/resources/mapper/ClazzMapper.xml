@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dms_idea.dao.ClazzMapper">
+    <select id="getClazzList">
+        select *
+        from dormitory_management_system.view_get_all_clazz_list
+        <where>
+            <if test="map.name!=null">and name like concat('%',#{map.name},'%')</if>
+            <if test="map.stuNumber!=null">and stu_number>=#{map.stuNumber}</if>
+            <if test="map.insName!=null">and ins_name=#{map.insName}</if>
+            <if test="map.majorName!=null">and major_name=#{map.majorName}</if>
+            <if test="map.entranceYear!=null">and entrance_year=#{map.entranceYear}</if>
+        </where>
+        <if test="prop!=null">
+            order by ${prop} ${order}
+        </if>
+    </select>
+
+    <select id="getClazzByName">
+        select * from dormitory_management_system.view_get_all_clazz_list
+        where name=#{name} and ins_name = #{insName} and major_name=#{majorName} and entrance_year=#{entranceYear}
+    </select>
+
+    <insert id="addClazz">
+        insert into dormitory_management_system.clazz(name, major_id,entrance_year)
+        VALUES (#{name},#{majorId},#{entranceYear})
+    </insert>
+
+    <select id="getClazzById">
+        select * from dormitory_management_system.view_get_all_clazz_list
+        where id=#{id}
+    </select>
+
+    <update id="updateClazz">
+        update dormitory_management_system.clazz
+        set name=#{name}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteClazz">
+        delete from dormitory_management_system.clazz
+        where id=#{id}
+    </delete>
+</mapper>

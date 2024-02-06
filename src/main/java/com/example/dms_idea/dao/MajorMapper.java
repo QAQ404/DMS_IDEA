@@ -8,9 +8,9 @@ import java.util.Map;
 
 @Mapper
 public interface MajorMapper {
-    List<Major> getManagerList(String prop, String order, Map<String, Object> map);
+    List<Major> getMajorList(String prop, String order, Map<String, Object> map);
 
-    Major getMajorByNameInsId(String name, String insName);
+    Major getMajorByNameInsName(String name, String insName);
 
     void addMajor(String name, Integer insId);
 
@@ -19,4 +19,8 @@ public interface MajorMapper {
     void updateMajor(Major major);
 
     void deleteMajor(Integer id);
+
+    List<Major> getMajorNameList(String insName);
+
+    void addClazzNumber(Integer id, int i);
 }
