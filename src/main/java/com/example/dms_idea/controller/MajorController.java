@@ -64,6 +64,7 @@ public class MajorController {
         }
         return Result.success(map);
     }
+
     @PutMapping("/updateMajor")
     public Result updateMajor(@RequestBody Major major){
         Major maj = majorService.getMajorByNameInsName(major.getName(),major.getInsName());

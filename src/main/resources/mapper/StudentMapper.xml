@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dms_idea.dao.StudentMapper">
+
+    <select id="getStudentList">
+        select *
+        from dormitory_management_system.view_get_all_student_list
+        <if test="prop!=null">
+            order by ${prop} ${order}
+        </if>
+    </select>
+
+    <resultMap id="StudentInfoList" type="Student">
+        <id property="id" column="id"/>
+        <result property="name" column="name" />
+        <result property="buildingId" column="building_id"/>
+        <result property="buildingName" column="building_name"/>
+        <result property="dormitoryId" column="dormitory_id"/>
+        <result property="dormitoryName" column="dormitory_name"/>
+        <result property="unitNumber" column="unit_number"/>
+        <result property="floorNumber" column="floor_number"/>
+        <result property="insId" column="ins_id"/>
+        <result property="insName" column="ins_name"/>
+        <result property="majorId" column="major_id"/>
+        <result property="majorName" column="major_name"/>
+        <result property="clazzId" column="clazz_id"/>
+        <result property="clazzName" column="clazz_name"/>
+        <result property="gender" column="gender"/>
+        <result property="studyId" column="study_id"/>
+        <result property="entranceYear" column="entrance_year"/>
+        <association property="studentInfo" javaType="StudentInfo">
+            <id property="id" column="id" />
+            <result property="phone" column="phone"/>
+            <result property="picture" column="picture"/>
+            <result property="email" column="email" />
+            <result property="introduction" column="introduction" />
+            <result property="updateTime" column="update_time" />
+            <result property="ethnicity" column="ethnicity" />
+            <result property="birthday" column="birthday" />
+        </association>
+    </resultMap>
+
+    <select id="getStudentById" resultMap="StudentInfoList">
+        select * from dormitory_management_system.view_get_all_studentinfo_list
+        where id=#{id}
+    </select>
+</mapper>

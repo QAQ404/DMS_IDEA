@@ -7,6 +7,9 @@ import com.example.dms_idea.service.MajorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -76,5 +79,38 @@ public class ClazzController {
         Institute institute = instituteService.getInstituteByName(clazz.getInsName());
         instituteService.addClazzNumber(institute.getId(),-1);
         return Result.success();
+    }
+
+    @GetMapping("/getClazzListCascader")
+    public Result<List<Map<String,Object>>> getClazzListCascader(){
+        List<Institute> instituteList = instituteService.getInstituteNameList();
+        List<Map<String,Object>> map = new ArrayList<>();
+        for(Institute institute : instituteList){
+            if(institute.getClazzNumber() == 0) continue;
+            Map<String,Object> ins = new HashMap<>();
+            ins.put("label",institute.getName());
+            ins.put("value",institute.getId());
+            List<Map<String,Object>> majorMap = new ArrayList<>();
+            List<Major> majorList = majorService.getMajorNameList(institute.getName());
+            for(Major major : majorList){
+                if(major.getClazzNumber() == 0) continue;
+                Map<String,Object> maj = new HashMap<>();
+                maj.put("label",major.getName());
+                maj.put("value",major.getId());
+                List<Map<String,Object>> clazzMap = new ArrayList<>();
+                List<Clazz> clazzList = clazzService.getClazzListByMajorInstitute(major.getName(),institute.getName());
+                for(Clazz clazz : clazzList){
+                    Map<String,Object> cla = new HashMap<>();
+                    cla.put("label",institute.getName()+major.getName()+clazz.getEntranceYear()+"级"+clazz.getName()+"班");
+                    cla.put("value",clazz.getId());
+                    clazzMap.add(cla);
+                }
+                maj.put("children",clazzMap);
+                majorMap.add(maj);
+            }
+            ins.put("children",majorMap);
+            map.add(ins);
+        }
+        return Result.success(map);
     }
 }

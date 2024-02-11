@@ -9,6 +9,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,5 +56,17 @@ public class ClazzServiceImpl implements ClazzService {
     @Override
     public void deleteClazz(Integer id) {
         clazzMapper.deleteClazz(id);
+    }
+
+    @Override
+    public List<Clazz> getClazzList() {
+        Map<String,Object> map = new HashMap<>();
+        return clazzMapper.getClazzList(null,null,map);
+    }
+
+    @Override
+    public List<Clazz> getClazzListByMajorInstitute(String majorName, String insName) {
+
+        return clazzMapper.getClazzListByMajorInstitute(majorName,insName);
     }
 }

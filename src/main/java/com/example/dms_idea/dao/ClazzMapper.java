@@ -19,4 +19,6 @@ public interface ClazzMapper {
     void updateClazz(Clazz clazz);
 
     void deleteClazz(Integer id);
+
+    List<Clazz> getClazzListByMajorInstitute(String majorName, String insName);
 }

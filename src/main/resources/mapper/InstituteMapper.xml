@@ -40,7 +40,7 @@
     </update>
 
     <select id="getInstituteNameList">
-        select name,id
+        select *
         from dormitory_management_system.institute
     </select>
 
