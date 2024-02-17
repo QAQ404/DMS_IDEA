@@ -28,4 +28,6 @@ public interface DormitoryMapper {
     void deleteDormitory(String id);
 
     List<String> checkDormitoryName(Map<String, Integer> map);
+
+    void addStudentNumber(int id, int num);
 }

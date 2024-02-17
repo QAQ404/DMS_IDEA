@@ -49,4 +49,10 @@
         delete from dormitory_management_system.clazz
         where id=#{id}
     </delete>
+
+    <update id="addStudentNumber">
+        update dormitory_management_system.clazz
+        set stu_number = stu_number + #{num}
+        where id = #{id}
+    </update>
 </mapper>

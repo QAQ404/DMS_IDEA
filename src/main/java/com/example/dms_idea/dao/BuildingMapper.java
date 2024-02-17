@@ -36,4 +36,6 @@ public interface BuildingMapper {
     void deleteBuildingInfo(String id);
 
     void deleteBuilding(String id);
+
+    void addStudentNumber(int id, int num);
 }

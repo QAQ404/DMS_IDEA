@@ -21,4 +21,6 @@ public interface ClazzMapper {
     void deleteClazz(Integer id);
 
     List<Clazz> getClazzListByMajorInstitute(String majorName, String insName);
+
+    void addStudentNumber(Integer id, int num);
 }

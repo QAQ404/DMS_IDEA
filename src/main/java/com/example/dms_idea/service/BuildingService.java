@@ -33,4 +33,6 @@ public interface BuildingService {
     int getManId(String id);
 
     void deleteBuilding(String id);
+
+    void addStudentNumber(int id, int num);
 }

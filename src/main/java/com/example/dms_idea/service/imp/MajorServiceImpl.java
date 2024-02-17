@@ -66,4 +66,9 @@ public class MajorServiceImpl implements MajorService {
     public void addClazzNumber(Integer id, int i) {
         majorMapper.addClazzNumber(id,i);
     }
+
+    @Override
+    public void addStudentNumber(Integer id, int num) {
+        majorMapper.addStudentNumber(id,num);
+    }
 }

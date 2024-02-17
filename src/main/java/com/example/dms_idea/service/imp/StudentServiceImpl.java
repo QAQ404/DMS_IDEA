@@ -36,4 +36,19 @@ public class StudentServiceImpl implements StudentService {
     public Student getStudentById(Integer id) {
         return studentMapper.getStudentById(id);
     }
+
+    @Override
+    public Student getSimpleStudentById(Integer id) {
+        return studentMapper.getSimpleStudentById(id);
+    }
+
+    @Override
+    public void addStudent(int userId, int dormitoryId, String studyId, String gender, Integer insId, Integer majorId, Integer clazzId, String entranceYear) {
+        studentMapper.addStudent(userId,dormitoryId,studyId,gender,insId,majorId,clazzId,entranceYear);
+    }
+
+    @Override
+    public void addStudentInfo(Integer id) {
+        studentMapper.addStudentInfo(id);
+    }
 }

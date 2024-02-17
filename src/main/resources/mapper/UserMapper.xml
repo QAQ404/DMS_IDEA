@@ -47,4 +47,9 @@
         delete from dormitory_management_system.user
         where id=#{id}
     </delete>
+
+    <select id="getUserByUsername">
+        select *
+        from dormitory_management_system.user where username=#{username};
+    </select>
 </mapper>

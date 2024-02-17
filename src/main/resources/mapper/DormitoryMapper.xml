@@ -69,4 +69,10 @@
         from dormitory_management_system.dormitory
         where building_id=#{buildingId} and unit_number = #{unitNumber} and floor_number = #{floorNumber}
     </select>
+
+    <update id="addStudentNumber">
+        update dormitory_management_system.dormitory
+        set stu_number = stu_number + #{num}
+        where id=#{id}
+    </update>
 </mapper>

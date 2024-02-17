@@ -22,6 +22,7 @@ public class Student {
     private String majorName; //专业名称
     private Integer clazzId; //班级Id
     private Integer clazzName; //班级号
+    private Integer clazzYear; //班级年级
     private String gender; //学生性别
     private String studyId; //学号
     private Integer entranceYear;//入学年份

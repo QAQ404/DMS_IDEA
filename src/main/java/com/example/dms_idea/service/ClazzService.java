@@ -22,4 +22,6 @@ public interface ClazzService {
     List<Clazz> getClazzList();
 
     List<Clazz> getClazzListByMajorInstitute(String majorName, String insName);
+
+    void addStudentNumber(Integer id, int num);
 }

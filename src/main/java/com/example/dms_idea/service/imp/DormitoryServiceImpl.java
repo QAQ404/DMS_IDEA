@@ -89,4 +89,9 @@ public class DormitoryServiceImpl implements DormitoryService {
     public List<String> checkDormitoryName(Map<String, Integer> map) {
         return dormitoryMapper.checkDormitoryName(map);
     }
+
+    @Override
+    public void addStudentNumber(int id, int num) {
+        dormitoryMapper.addStudentNumber(id,num);
+    }
 }

@@ -74,6 +74,12 @@
         where id = #{buildingId}
     </update>
 
+    <update id="addStudentNumber">
+        update dormitory_management_system.building
+        set stu_number = stu_number + #{num}
+        where id = #{id}
+    </update>
+
     <select id="getdorNumber">
         select dor_number
         from dormitory_management_system.building

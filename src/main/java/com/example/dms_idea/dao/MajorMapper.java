@@ -23,4 +23,6 @@ public interface MajorMapper {
     List<Major> getMajorNameList(String insName);
 
     void addClazzNumber(Integer id, int i);
+
+    void addStudentNumber(Integer id, int num);
 }

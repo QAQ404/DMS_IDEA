@@ -26,6 +26,7 @@
         <result property="majorName" column="major_name"/>
         <result property="clazzId" column="clazz_id"/>
         <result property="clazzName" column="clazz_name"/>
+        <result property="clazzYear" column="clazz_year"/>
         <result property="gender" column="gender"/>
         <result property="studyId" column="study_id"/>
         <result property="entranceYear" column="entrance_year"/>
@@ -45,4 +46,21 @@
         select * from dormitory_management_system.view_get_all_studentinfo_list
         where id=#{id}
     </select>
+
+    <select id="getSimpleStudentById">
+        select * from dormitory_management_system.view_get_all_student_list
+        where id=#{id}
+    </select>
+
+    <insert id="addStudent">
+        insert into dormitory_management_system.student(user_id, dormitory_id, study_id, gender, major_id, clazz_id, ins_id, entrance_year)
+        VALUES(#{userId},#{dormitoryId},#{studyId},#{gender},#{majorId},#{clazzId},#{insId},#{entranceYear})
+    </insert>
+
+    <insert id="addStudentInfo">
+        insert into dormitory_management_system.student_info(student_id,update_time)
+        VALUES (#{id},now())
+    </insert>
+
+
 </mapper>

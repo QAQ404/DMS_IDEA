@@ -71,4 +71,9 @@ public class InstituteServiceImpl implements InstituteService {
     public void addClazzNumber(Integer id, int i) {
         instituteMapper.addClazzNumber(id,i);
     }
+
+    @Override
+    public void addStudentNumber(Integer id, int num) {
+        instituteMapper.addStudentNumber(id,num);
+    }
 }

@@ -97,4 +97,9 @@ public class BuildingServiceImpl implements BuildingService {
         buildingMapper.deleteBuildingInfo(id);
         buildingMapper.deleteBuilding(id);
     }
+
+    @Override
+    public void addStudentNumber(int id, int num) {
+        buildingMapper.addStudentNumber(id,num);
+    }
 }

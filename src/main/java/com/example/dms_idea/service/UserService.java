@@ -15,4 +15,6 @@ public interface UserService {
     int getUserRoleById(String id);
 
     void deleteUserById(String id);
+
+    User getUserByUsername(String username);
 }

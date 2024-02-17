@@ -26,4 +26,6 @@ public interface InstituteMapper {
     void addMajorNumber(Integer id, int i);
 
     void addClazzNumber(Integer id, int i);
+
+    void addStudentNumber(Integer id, int num);
 }

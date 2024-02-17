@@ -69,4 +69,9 @@ public class ClazzServiceImpl implements ClazzService {
 
         return clazzMapper.getClazzListByMajorInstitute(majorName,insName);
     }
+
+    @Override
+    public void addStudentNumber(Integer id, int num) {
+        clazzMapper.addStudentNumber(id,num);
+    }
 }
