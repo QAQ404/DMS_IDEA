@@ -38,4 +38,6 @@ public interface BuildingMapper {
     void deleteBuilding(String id);
 
     void addStudentNumber(int id, int num);
+
+    List<Building> getBuildingList();
 }

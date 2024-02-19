@@ -30,4 +30,10 @@ public interface DormitoryMapper {
     List<String> checkDormitoryName(Map<String, Integer> map);
 
     void addStudentNumber(int id, int num);
+
+    List<Dormitory> getDormitoryListByBuildingIdUnitFloor(int id, int unit, int floor);
+
+    List<Integer> getDormitoryUnitHasDor(int buildingId);
+
+    List<Integer> getDormitoryFlootHasDor(int buildingId, Integer unit);
 }

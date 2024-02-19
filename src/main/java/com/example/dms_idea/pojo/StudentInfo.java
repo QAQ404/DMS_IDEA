@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Data
@@ -19,6 +20,5 @@ public class StudentInfo {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
     private String ethnicity; //民族
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime birthday;
+    private Date birthday;
 }

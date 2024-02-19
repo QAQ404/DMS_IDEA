@@ -1,9 +1,6 @@
 package com.example.dms_idea.controller;
 
-import com.example.dms_idea.pojo.PageBean;
-import com.example.dms_idea.pojo.Result;
-import com.example.dms_idea.pojo.Student;
-import com.example.dms_idea.pojo.User;
+import com.example.dms_idea.pojo.*;
 import com.example.dms_idea.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +32,7 @@ public class StudentController {
 
     @Autowired
     private ClazzService clazzService;
+
 
     @PostMapping("/getStudentList")
     public Result<PageBean<Student>> getStudentList(@RequestBody Map<String ,Object> map){
@@ -87,6 +85,44 @@ public class StudentController {
             instituteService.addStudentNumber(clazzList.get(0),1);
             majorService.addStudentNumber(clazzList.get(1),1);
             clazzService.addStudentNumber(clazzList.get(2),1);
+        }
+        return Result.success();
+    }
+
+    @PutMapping("/updateStudentInfo")
+    public Result updateStudentInfo(@RequestBody Student student){
+        Student oldStudent = studentService.getStudentById(student.getId());
+        if(oldStudent.getName() != student.getName()) userService.updateName(student.getId(),student.getName());
+        if(oldStudent.getGender() != student.getGender()) studentService.updateStudentGender(student.getId(),student.getGender());
+        if(oldStudent.getEntranceYear() != student.getEntranceYear()) studentService.updateStudentEntranceYear(student.getId(),student.getEntranceYear());
+        studentService.updateStudentInfo(student.getStudentInfo());
+        if(student.getDormitoryId() != oldStudent.getDormitoryId()){
+            studentService.updateStudentDormitoryId(student.getId(),student.getDormitoryId());
+            dormitoryService.addStudentNumber(student.getDormitoryId(),1);
+            dormitoryService.addStudentNumber(oldStudent.getDormitoryId(),-1);
+            Dormitory dormitory = dormitoryService.getDormitoryById(student.getDormitoryId());
+            if(dormitory.getId() != oldStudent.getDormitoryId()){
+                buildingService.addStudentNumber(dormitory.getBuildingId(),1);
+                buildingService.addStudentNumber(oldStudent.getBuildingId(),-1);
+            }
+        }
+        if(student.getClazzId() != oldStudent.getClazzId()){
+            studentService.updateStudentClazzId(student.getId(),student.getClazzId());
+            clazzService.addStudentNumber(student.getClazzId(),1);
+            clazzService.addStudentNumber(oldStudent.getClazzId(),-1);
+            Clazz clazz = clazzService.getClazzById(student.getClazzId());
+            Major major = majorService.getMajorByNameInsName(clazz.getMajorName(),clazz.getInsName());
+            if(major.getId() != oldStudent.getMajorId()){
+                studentService.updateStudentMajorId(student.getId(),major.getId());
+                majorService.addStudentNumber(major.getId(),1);
+                majorService.addStudentNumber(oldStudent.getMajorId(),-1);
+            }
+            Institute institute = instituteService.getInstituteByName(clazz.getInsName());
+            if(institute.getId() != oldStudent.getInsId()){
+                studentService.updateStudentInsId(student.getId(),institute.getId());
+                instituteService.addStudentNumber(institute.getId(),1);
+                instituteService.addStudentNumber(oldStudent.getInsId(),-1);
+            }
         }
         return Result.success();
     }

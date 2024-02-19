@@ -25,6 +25,7 @@ public class Student {
     private Integer clazzYear; //班级年级
     private String gender; //学生性别
     private String studyId; //学号
-    private Integer entranceYear;//入学年份
+    private String entranceYear;//入学年份
     private StudentInfo studentInfo;
+
 }

@@ -13,7 +13,7 @@
 
     <resultMap id="StudentInfoList" type="Student">
         <id property="id" column="id"/>
-        <result property="name" column="name" />
+        <result property="name" column="name"/>
         <result property="buildingId" column="building_id"/>
         <result property="buildingName" column="building_name"/>
         <result property="dormitoryId" column="dormitory_id"/>
@@ -31,36 +31,85 @@
         <result property="studyId" column="study_id"/>
         <result property="entranceYear" column="entrance_year"/>
         <association property="studentInfo" javaType="StudentInfo">
-            <id property="id" column="id" />
+            <id property="id" column="id"/>
             <result property="phone" column="phone"/>
             <result property="picture" column="picture"/>
-            <result property="email" column="email" />
-            <result property="introduction" column="introduction" />
-            <result property="updateTime" column="update_time" />
-            <result property="ethnicity" column="ethnicity" />
-            <result property="birthday" column="birthday" />
+            <result property="email" column="email"/>
+            <result property="introduction" column="introduction"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="ethnicity" column="ethnicity"/>
+            <result property="birthday" column="birthday"/>
         </association>
     </resultMap>
 
     <select id="getStudentById" resultMap="StudentInfoList">
-        select * from dormitory_management_system.view_get_all_studentinfo_list
-        where id=#{id}
+        select *
+        from dormitory_management_system.view_get_all_studentinfo_list
+        where id = #{id}
     </select>
 
     <select id="getSimpleStudentById">
-        select * from dormitory_management_system.view_get_all_student_list
-        where id=#{id}
+        select *
+        from dormitory_management_system.view_get_all_student_list
+        where id = #{id}
     </select>
 
     <insert id="addStudent">
-        insert into dormitory_management_system.student(user_id, dormitory_id, study_id, gender, major_id, clazz_id, ins_id, entrance_year)
-        VALUES(#{userId},#{dormitoryId},#{studyId},#{gender},#{majorId},#{clazzId},#{insId},#{entranceYear})
+        insert into dormitory_management_system.student(user_id, dormitory_id, study_id, gender, major_id, clazz_id,
+                                                        ins_id, entrance_year)
+        VALUES (#{userId}, #{dormitoryId}, #{studyId}, #{gender}, #{majorId}, #{clazzId}, #{insId}, #{entranceYear})
     </insert>
 
     <insert id="addStudentInfo">
-        insert into dormitory_management_system.student_info(student_id,update_time)
-        VALUES (#{id},now())
+        insert into dormitory_management_system.student_info(student_id, update_time)
+        VALUES (#{id}, now())
     </insert>
 
+    <update id="updateStudentInfo">
+        update dormitory_management_system.student_info
+        set phone        = #{phone}
+          , picture      = #{picture}
+          , email        =#{email}
+          , introduction =#{introduction}
+          , update_time  = now()
+          , ethnicity    = #{ethnicity}
+          , birthday     = #{birthday}
+        where student_id = #{id};
+    </update>
 
+    <update id="updateStudentGender">
+        update dormitory_management_system.student
+        set gender = #{gender}
+        where user_id = #{id}
+    </update>
+
+    <update id="updateStudentEntranceYear">
+        update dormitory_management_system.student
+        set entrance_year = #{entranceYear}
+        where user_id = #{id}
+    </update>
+
+    <update id="updateStudentDormitoryId">
+        update dormitory_management_system.student
+        set dormitory_id = #{dormitoryId}
+        where user_id = #{id}
+    </update>
+
+    <update id="updateStudentClazzId">
+        update dormitory_management_system.student
+        set clazz_id = #{clazzId}
+        where user_id = #{id};
+    </update>
+
+    <update id="updateStudentMajorId">
+        update dormitory_management_system.student
+        set major_id = #{majorId}
+        where user_id = #{id};
+    </update>
+
+    <update id="updateStudentInsId">
+        update dormitory_management_system.student
+        set ins_id = #{insId}
+        where user_id = #{id};
+    </update>
 </mapper>

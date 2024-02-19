@@ -2,6 +2,7 @@ package com.example.dms_idea.service;
 
 import com.example.dms_idea.pojo.PageBean;
 import com.example.dms_idea.pojo.Student;
+import com.example.dms_idea.pojo.StudentInfo;
 
 import java.util.Map;
 
@@ -15,4 +16,18 @@ public interface StudentService {
     void addStudent(int userId, int dormitoryId, String studyId, String gender, Integer insId, Integer majorId, Integer clazzId, String entranceYear);
 
     void addStudentInfo(Integer id);
+
+    void updateStudentInfo(StudentInfo studentInfo);
+
+    void updateStudentGender(Integer id, String gender);
+
+    void updateStudentEntranceYear(Integer id,String entranceYear);
+
+    void updateStudentDormitoryId(Integer id, Integer dormitoryId);
+
+    void updateStudentClazzId(Integer id, Integer clazzId);
+
+    void updateStudentMajorId(Integer id, Integer majorId);
+
+    void updateStudentInsId(Integer id, Integer insId);
 }

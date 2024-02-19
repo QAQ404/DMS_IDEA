@@ -94,4 +94,19 @@ public class DormitoryServiceImpl implements DormitoryService {
     public void addStudentNumber(int id, int num) {
         dormitoryMapper.addStudentNumber(id,num);
     }
+
+    @Override
+    public List<Dormitory> getDormitoryListByBuildingIdUnitFloor(int id, int unit, int floor) {
+        return dormitoryMapper.getDormitoryListByBuildingIdUnitFloor(id,unit,floor);
+    }
+
+    @Override
+    public List<Integer> getDormitoryUnitHasDor(int buildingId) {
+        return dormitoryMapper.getDormitoryUnitHasDor(buildingId);
+    }
+
+    @Override
+    public List<Integer> getDormitoryFlootHasDor(int buildingId, Integer unit) {
+        return dormitoryMapper.getDormitoryFlootHasDor(buildingId,unit);
+    }
 }

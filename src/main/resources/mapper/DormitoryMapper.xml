@@ -75,4 +75,20 @@
         set stu_number = stu_number + #{num}
         where id=#{id}
     </update>
+
+    <select id="getDormitoryListByBuildingIdUnitFloor">
+        select *
+        from dormitory_management_system.view_get_all_dormitory_list
+        where building_id=#{id} and unit_number = #{unit} and floor_number = #{floor}
+    </select>
+
+    <select id="getDormitoryUnitHasDor">
+        select distinct unit_number
+        from dormitory_management_system.view_get_all_dormitory_list where building_id=#{buildingId} order by unit_number
+    </select>
+
+    <select id="getDormitoryFlootHasDor">
+        select distinct floor_number
+        from dormitory_management_system.view_get_all_dormitory_list where building_id=#{buildingId} and unit_number=#{unit} order by floor_number
+    </select>
 </mapper>

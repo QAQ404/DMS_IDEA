@@ -3,6 +3,7 @@ package com.example.dms_idea.service.imp;
 import com.example.dms_idea.dao.StudentMapper;
 import com.example.dms_idea.pojo.PageBean;
 import com.example.dms_idea.pojo.Student;
+import com.example.dms_idea.pojo.StudentInfo;
 import com.example.dms_idea.service.StudentService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -50,5 +51,40 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void addStudentInfo(Integer id) {
         studentMapper.addStudentInfo(id);
+    }
+
+    @Override
+    public void updateStudentInfo(StudentInfo studentInfo) {
+        studentMapper.updateStudentInfo(studentInfo);
+    }
+
+    @Override
+    public void updateStudentGender(Integer id, String gender) {
+        studentMapper.updateStudentGender(id,gender);
+    }
+
+    @Override
+    public void updateStudentEntranceYear(Integer id, String entranceYear) {
+        studentMapper.updateStudentEntranceYear(id,entranceYear);
+    }
+
+    @Override
+    public void updateStudentDormitoryId(Integer id, Integer dormitoryId) {
+        studentMapper.updateStudentDormitoryId(id,dormitoryId);
+    }
+
+    @Override
+    public void updateStudentClazzId(Integer id, Integer clazzId) {
+        studentMapper.updateStudentClazzId(id,clazzId);
+    }
+
+    @Override
+    public void updateStudentMajorId(Integer id, Integer majorId) {
+        studentMapper.updateStudentMajorId(id,majorId);
+    }
+
+    @Override
+    public void updateStudentInsId(Integer id, Integer insId) {
+        studentMapper.updateStudentInsId(id,insId);
     }
 }

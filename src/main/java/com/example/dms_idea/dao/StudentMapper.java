@@ -1,6 +1,7 @@
 package com.example.dms_idea.dao;
 
 import com.example.dms_idea.pojo.Student;
+import com.example.dms_idea.pojo.StudentInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -18,4 +19,18 @@ public interface StudentMapper {
     void addStudentInfo(Integer id);
 
     Student getSimpleStudentById(Integer id);
+
+    void updateStudentInfo(StudentInfo student);
+
+    void updateStudentGender(Integer id, String gender);
+
+    void updateStudentEntranceYear(Integer id, String entranceYear);
+
+    void updateStudentDormitoryId(Integer id, Integer dormitoryId);
+
+    void updateStudentClazzId(Integer id, Integer clazzId);
+
+    void updateStudentMajorId(Integer id, Integer majorId);
+
+    void updateStudentInsId(Integer id, Integer insId);
 }

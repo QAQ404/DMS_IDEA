@@ -102,4 +102,9 @@ public class BuildingServiceImpl implements BuildingService {
     public void addStudentNumber(int id, int num) {
         buildingMapper.addStudentNumber(id,num);
     }
+
+    @Override
+    public List<Building> getBuildingList() {
+        return buildingMapper.getBuildingList();
+    }
 }
