@@ -17,13 +17,19 @@
         </if>
     </select>
 
-    <select id="getClazzListByMajorInstitute">
+    <select id="getClazzListByMajorInstituteYear">
         select *
         from dormitory_management_system.view_get_all_clazz_list
-        where ins_name=#{insName} and major_name=#{majorName}
+        where ins_name=#{insName} and major_name=#{majorName} and entrance_year = #{year}
         order by entrance_year desc,name asc
     </select>
 
+    <select id="getClazzYearByMajorInstitute">
+        select distinct entrance_year
+        from dormitory_management_system.view_get_all_clazz_list
+        where ins_name=#{insName} and major_name=#{majorName}
+        order by entrance_year desc
+    </select>
     <select id="getClazzByName">
         select * from dormitory_management_system.view_get_all_clazz_list
         where name=#{name} and ins_name = #{insName} and major_name=#{majorName} and entrance_year=#{entranceYear}

@@ -10,6 +10,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,18 @@ public class StudentServiceImpl implements StudentService {
         PageBean<Student> pageBean = new PageBean<>();
         PageHelper.startPage(pageNum, pageSize);
 
-        List<Student> list = studentMapper.getStudentList(prop, order,map);
+        List<List> OldDormitoryList = (List<List>) map.get("dormitoryList");
+        List<Integer> dormitoryList = new ArrayList<>();
+        for(List li : OldDormitoryList){
+            dormitoryList.add((Integer) li.get(3));
+        }
+        List<List> OldClazzList = (List<List>) map.get("clazzList");
+        List<Integer> clazzList = new ArrayList<>();
+        for(List cl : OldClazzList){
+            clazzList.add((Integer) cl.get(3));
+        }
+
+        List<Student> list = studentMapper.getStudentList(prop, order,map,dormitoryList,clazzList);
 
         Page<Student> pageBeanList = (Page<Student>) list;
 
@@ -87,4 +99,12 @@ public class StudentServiceImpl implements StudentService {
     public void updateStudentInsId(Integer id, Integer insId) {
         studentMapper.updateStudentInsId(id,insId);
     }
+
+    @Override
+    public void deleteStudent(Integer id) {
+        studentMapper.deleteStudentInfo(id);
+        studentMapper.deleteStudent(id);
+    }
+
+
 }

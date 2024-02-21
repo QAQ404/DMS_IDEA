@@ -6,6 +6,22 @@
     <select id="getStudentList">
         select *
         from dormitory_management_system.view_get_all_student_list
+        <where>
+            <if test="map.name!=null">and name like concat('%',#{map.name},'%')</if>
+            <if test="map.studyId!=null">and study_id like concat('%',#{map.studyId},'%')</if>
+            <if test="map.gender!=null">and gender=#{map.gender}</if>
+            <if test="map.entranceYear!=null">and entrance_year=#{map.entranceYear}</if>
+            <if test="dormitoryList.size()>0">and dormitory_id in
+                <foreach collection="dormitoryList" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="clazzList.size()>0">and clazz_id in
+                <foreach collection="clazzList" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
         <if test="prop!=null">
             order by ${prop} ${order}
         </if>
@@ -46,6 +62,12 @@
         select *
         from dormitory_management_system.view_get_all_studentinfo_list
         where id = #{id}
+    </select>
+
+    <select id="getStudentByDormitoryId" resultMap="StudentInfoList">
+        select *
+        from dormitory_management_system.view_get_all_studentinfo_list
+        where dormitory_id = #{id}
     </select>
 
     <select id="getSimpleStudentById">
@@ -112,4 +134,12 @@
         set ins_id = #{insId}
         where user_id = #{id};
     </update>
+
+    <delete id="deleteStudent">
+        delete from dormitory_management_system.student where user_id = #{id}
+    </delete>
+
+    <delete id="deleteStudentInfo">
+        delete from dormitory_management_system.student_info where student_id = #{id}
+    </delete>
 </mapper>

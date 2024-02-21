@@ -65,13 +65,18 @@ public class ClazzServiceImpl implements ClazzService {
     }
 
     @Override
-    public List<Clazz> getClazzListByMajorInstitute(String majorName, String insName) {
+    public List<Clazz> getClazzListByMajorInstituteYear(String majorName, String insName,Integer year) {
 
-        return clazzMapper.getClazzListByMajorInstitute(majorName,insName);
+        return clazzMapper.getClazzListByMajorInstituteYear(majorName,insName,year);
     }
 
     @Override
     public void addStudentNumber(Integer id, int num) {
         clazzMapper.addStudentNumber(id,num);
+    }
+
+    @Override
+    public List<Integer> getClazzYearByMajorInstitute(String majorName, String insName) {
+        return clazzMapper.getClazzYearByMajorInstitute(majorName,insName);
     }
 }

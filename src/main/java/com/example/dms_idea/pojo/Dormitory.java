@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -23,5 +24,7 @@ public class Dormitory {
     private int buildingId;
     private String buildingName;
     private String manName;
+    private Integer managerId;
     private String  workId;
+    private List<Student> studentList;
 }

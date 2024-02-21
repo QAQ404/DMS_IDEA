@@ -74,17 +74,16 @@ public class StudentController {
             String  studyId= (String) map.get("studyId");
             String  password= (String) map.get("password");
             List<Integer> clazzList = (List<Integer>) map.get("clazzId");
-            System.out.println(name+gender+entranceYear+studyId+password+clazzList);
             userService.addUser(studyId,password,name,1);
             User user = userService.getUserByUsername(studyId);
-            studentService.addStudent(user.getId(),1,studyId,gender,clazzList.get(0),clazzList.get(1),clazzList.get(2),entranceYear);
+            studentService.addStudent(user.getId(),1,studyId,gender,clazzList.get(0),clazzList.get(1),clazzList.get(3),entranceYear);
             Student student = studentService.getSimpleStudentById(user.getId());
             studentService.addStudentInfo(student.getId());
             buildingService.addStudentNumber(14,1);
             dormitoryService.addStudentNumber(1,1);
             instituteService.addStudentNumber(clazzList.get(0),1);
             majorService.addStudentNumber(clazzList.get(1),1);
-            clazzService.addStudentNumber(clazzList.get(2),1);
+            clazzService.addStudentNumber(clazzList.get(3),1);
         }
         return Result.success();
     }
@@ -124,6 +123,19 @@ public class StudentController {
                 instituteService.addStudentNumber(oldStudent.getInsId(),-1);
             }
         }
+        return Result.success();
+    }
+
+    @DeleteMapping("/deleteStudent")
+    public Result deleteStudent(Integer id){
+        Student student = studentService.getSimpleStudentById(id);
+        studentService.deleteStudent(id);
+        userService.deleteUserById(id);
+        clazzService.addStudentNumber(student.getClazzId(),-1);
+        majorService.addStudentNumber(student.getMajorId(),-1);
+        instituteService.addStudentNumber(student.getInsId(),-1);
+        dormitoryService.addStudentNumber(student.getDormitoryId(),-1);
+        buildingService.addStudentNumber(student.getBuildingId(),-1);
         return Result.success();
     }
 }

@@ -97,15 +97,24 @@ public class ClazzController {
                 Map<String,Object> maj = new HashMap<>();
                 maj.put("label",major.getName());
                 maj.put("value",major.getId());
-                List<Map<String,Object>> clazzMap = new ArrayList<>();
-                List<Clazz> clazzList = clazzService.getClazzListByMajorInstitute(major.getName(),institute.getName());
-                for(Clazz clazz : clazzList){
-                    Map<String,Object> cla = new HashMap<>();
-                    cla.put("label",institute.getName()+major.getName()+clazz.getEntranceYear()+"级"+clazz.getName()+"班");
-                    cla.put("value",clazz.getId());
-                    clazzMap.add(cla);
+                List<Map<String,Object>> yearMap = new ArrayList<>();
+                List<Integer> yearList = clazzService.getClazzYearByMajorInstitute(major.getName(),institute.getName());
+                for(Integer year:yearList){
+                    Map<String,Object> ye = new HashMap<>();
+                    ye.put("label",year+"级");
+                    ye.put("value",year);
+                    List<Map<String,Object>> clazzMap = new ArrayList<>();
+                    List<Clazz> clazzList = clazzService.getClazzListByMajorInstituteYear(major.getName(),institute.getName(),year);
+                    for(Clazz clazz : clazzList){
+                        Map<String,Object> cla = new HashMap<>();
+                        cla.put("label",institute.getName()+major.getName()+clazz.getEntranceYear()+"级"+clazz.getName()+"班");
+                        cla.put("value",clazz.getId());
+                        clazzMap.add(cla);
+                    }
+                    ye.put("children",clazzMap);
+                    yearMap.add(ye);
                 }
-                maj.put("children",clazzMap);
+                maj.put("children",yearMap);
                 majorMap.add(maj);
             }
             ins.put("children",majorMap);

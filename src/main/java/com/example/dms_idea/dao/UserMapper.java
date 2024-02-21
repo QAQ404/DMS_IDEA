@@ -20,6 +20,8 @@ public interface UserMapper {
 
     void deleteUserById(String id);
 
+    void deleteUserById(Integer id);
+
     int getUserRoleById(String id);
 
     User getUserByUsername(String username);

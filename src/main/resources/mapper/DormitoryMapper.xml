@@ -3,7 +3,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dms_idea.dao.DormitoryMapper">
 
-    <select id="getDormitoryList">
+    <resultMap id="DormitoryList" type="Dormitory">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="unitNumber" column="unit_number"/>
+        <result property="stuNumber" column="stu_number"/>
+        <result property="bedNumber" column="bed_number"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="floorNumber" column="floor_number"/>
+        <result property="buildingName" column="building_name"/>
+        <result property="manName" column="man_name"/>
+        <result property="picture" column="picture"/>
+        <result property="workId" column="work_id"/>
+        <result property="buildingId" column="building_id"/>
+        <result property="managerId" column="manager_id"/>
+        <collection property="studentList"
+                    select="com.example.dms_idea.dao.StudentMapper.getStudentByDormitoryId" column="id" />
+    </resultMap>
+
+    <select id="getDormitoryList" resultMap="DormitoryList">
         select *
         from dormitory_management_system.view_get_all_dormitory_list
         <where>

@@ -30,4 +30,6 @@ public interface StudentService {
     void updateStudentMajorId(Integer id, Integer majorId);
 
     void updateStudentInsId(Integer id, Integer insId);
+
+    void deleteStudent(Integer id);
 }
