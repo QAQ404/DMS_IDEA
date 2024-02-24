@@ -23,6 +23,7 @@ public class Student {
     private Integer clazzId; //班级Id
     private Integer clazzName; //班级号
     private Integer clazzYear; //班级年级
+    private Integer managerId; //宿管Id
     private String gender; //学生性别
     private String studyId; //学号
     private String entranceYear;//入学年份

@@ -38,6 +38,7 @@ public class DormitoryController {
             else if (prop.equals("floorNumber")) prop = "floor_number";
             else if (prop.equals("stuNumber")) prop = "stu_number";
             else if (prop.equals("manName")) prop = "man_name";
+            else if (prop.equals("bedNumber")) prop = "bed_number-stu_number";
         }
         PageBean<Dormitory> pageBean = dormitoryService.getDormitoryList(pageNum, pageSize, prop, order, map);
         return Result.success(pageBean);

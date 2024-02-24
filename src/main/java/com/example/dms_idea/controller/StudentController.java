@@ -138,4 +138,55 @@ public class StudentController {
         buildingService.addStudentNumber(student.getBuildingId(),-1);
         return Result.success();
     }
+
+    @PutMapping("/updateStudentDor")
+    public Result updateStudentDor(@RequestBody List<Student> studentList,Integer dorId){
+        Dormitory dormitory = dormitoryService.getDormitoryById(dorId);
+        for(Student item:studentList){
+            if(item.getDormitoryId() == dorId){
+                return Result.error(item.getName()+"不能迁入原寝室");
+            }
+        }
+        if(dormitory.getBedNumber()-dormitory.getStuNumber() < studentList.size()){
+            return Result.error("寝室只剩"+(dormitory.getBedNumber()-dormitory.getStuNumber())+"个床位,迁入人数过多");
+        }
+        for(Student student:studentList){
+            studentService.updateStudentDormitoryId(student.getId(),dorId);
+            dormitoryService.addStudentNumber(dorId,1);
+            dormitoryService.addStudentNumber(student.getDormitoryId(),-1);
+            if(student.getBuildingId() != dormitory.getBuildingId()){
+                buildingService.addStudentNumber(student.getBuildingId(),-1);
+                buildingService.addStudentNumber(dormitory.getBuildingId(),1);
+            }
+        }
+        return Result.success();
+    }
+
+    @PutMapping("/updateStudentClazz")
+    public Result updateStudentClazz(@RequestBody List<Student> studentList,Integer clazzId){
+        Clazz clazz = clazzService.getClazzById(clazzId);
+        for(Student item:studentList){
+            if(item.getClazzId() == clazzId){
+                return Result.error(item.getName()+"不能迁入原班级");
+            }
+        }
+        for(Student student:studentList){
+            clazzService.addStudentNumber(student.getClazzId(),-1);
+            clazzService.addStudentNumber(clazzId,1);
+            studentService.updateStudentClazzId(student.getId(),clazzId);
+            Major major = majorService.getMajorByNameInsName(clazz.getMajorName(),clazz.getInsName());
+            if(major.getId() != student.getMajorId()){
+                studentService.updateStudentMajorId(student.getId(),major.getId());
+                majorService.addStudentNumber(major.getId(),1);
+                majorService.addStudentNumber(student.getMajorId(),-1);
+            }
+            Institute institute = instituteService.getInstituteByName(clazz.getInsName());
+            if(institute.getId() != student.getInsId()){
+                studentService.updateStudentInsId(student.getId(),institute.getId());
+                instituteService.addStudentNumber(institute.getId(),1);
+                instituteService.addStudentNumber(student.getInsId(),-1);
+            }
+        }
+        return Result.success();
+    }
 }

@@ -29,8 +29,8 @@
             <if test="map.unitNumber!=null">and unit_number = #{map.unitNumber}</if>
             <if test="map.buildingId!=null">and building_id=#{map.buildingId}</if>
             <if test="map.floorNumber!=null">and floor_number=#{map.floorNumber}</if>
-            <if test="map.stuNumber!=null">and stu_number=#{map.stuNumber}</if>
-            <if test="map.bedNumber!=null">and bed_number=#{map.bedNumber}</if>
+            <if test="map.stuNumber!=null">and stu_number>=#{map.stuNumber}</if>
+            <if test="map.bedNumber!=null">and bed_number-stu_number>=#{map.bedNumber}</if>
             <if test="map.managerId!=null">and manager_id=#{map.managerId}</if>
         </where>
         <if test="prop!=null">

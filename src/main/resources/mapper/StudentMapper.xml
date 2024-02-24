@@ -43,6 +43,7 @@
         <result property="clazzId" column="clazz_id"/>
         <result property="clazzName" column="clazz_name"/>
         <result property="clazzYear" column="clazz_year"/>
+        <result property="managerId" column="manager_id"/>
         <result property="gender" column="gender"/>
         <result property="studyId" column="study_id"/>
         <result property="entranceYear" column="entrance_year"/>
