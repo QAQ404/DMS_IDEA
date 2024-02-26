@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dms_idea.dao.ChangeDormitoryApplicationMapper">
+    <select id="getApplicationList">
+        select *
+        from dormitory_management_system.view_change_dor_application
+        <where>
+
+        </where>
+        <if test="prop!=null">
+            order by ${prop} ${order}
+        </if>
+    </select>
+</mapper>
