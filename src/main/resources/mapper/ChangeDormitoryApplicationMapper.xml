@@ -6,10 +6,15 @@
         select *
         from dormitory_management_system.view_change_dor_application
         <where>
-
+            <if test="map.userId!=null">and stu_id=#{map.userId}</if>
         </where>
         <if test="prop!=null">
             order by ${prop} ${order}
         </if>
     </select>
+
+    <insert id="addApplication">
+        insert into dormitory_management_system.change_dormitory_application(stu_id, new_dormitory_id, new_stu_id, new_stu_name, new_stu_study_id, state, create_time)
+        VALUES (#{stuId},#{newDorId},#{newStuId},#{newStuName},#{newStudyId},0,now())
+    </insert>
 </mapper>

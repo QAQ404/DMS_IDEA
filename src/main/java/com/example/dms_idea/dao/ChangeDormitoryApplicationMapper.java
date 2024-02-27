@@ -9,4 +9,6 @@ import java.util.Map;
 @Mapper
 public interface ChangeDormitoryApplicationMapper {
     List<ChangeDormitoryApplication> getApplicationList(String prop, String order, Map<String, Object> map);
+
+    void addApplication(Integer stuId, Integer newDorId, Integer newStuId, String newStuName, String newStudyId);
 }

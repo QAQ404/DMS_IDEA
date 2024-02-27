@@ -30,4 +30,9 @@ public class ChangeDormitoryApplicationImpl implements ChangeDormitoryApplicatio
         pageBean.setItems(pageBeanList.getResult());
         return pageBean;
     }
+
+    @Override
+    public void addApplication(Integer stuId, Integer newDorId, Integer newStuId, String newStuName, String newStudyId) {
+        changeDorAppMapper.addApplication(stuId,newDorId,newStuId,newStuName,newStudyId);
+    }
 }

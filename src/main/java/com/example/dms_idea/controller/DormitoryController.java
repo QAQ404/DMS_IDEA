@@ -1,11 +1,9 @@
 package com.example.dms_idea.controller;
 
-import com.example.dms_idea.pojo.Building;
-import com.example.dms_idea.pojo.Dormitory;
-import com.example.dms_idea.pojo.PageBean;
-import com.example.dms_idea.pojo.Result;
+import com.example.dms_idea.pojo.*;
 import com.example.dms_idea.service.BuildingService;
 import com.example.dms_idea.service.DormitoryService;
+import com.example.dms_idea.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +21,9 @@ public class DormitoryController {
 
     @Autowired
     private BuildingService buildingService;
+
+    @Autowired
+    private StudentService studentService;
 
     @PostMapping("/getDormitoryList")   //获取全部寝室信息
     public Result<PageBean<Dormitory>> getDormitoryList(@RequestBody Map<String, Object> map) {
@@ -148,6 +149,64 @@ public class DormitoryController {
                         dor.put("bed", dormitory.getBedNumber() - dormitory.getStuNumber());
                         if (dormitory.getBedNumber() - dormitory.getStuNumber() == 0) dor.put("disabled", true);
                         else dor.put("disabled", false);
+                        floorMap.add(dor);
+                    }
+                    fl.put("children", floorMap);
+                    unitMap.add(fl);
+                }
+                un.put("children", unitMap);
+                buildingMap.add(un);
+            }
+            buil.put("children", buildingMap);
+            map.add(buil);
+        }
+        return Result.success(map);
+    }
+
+    @GetMapping("/getDormitoryBedListCascader")
+    public Result<List<Map<String, Object>>> getDormitoryBedListCascader() {
+        List<Map<String, Object>> map = new ArrayList<>();
+        List<Building> buildingList = buildingService.getBuildingList();
+        for (Building building : buildingList) {
+            if (building.getDorNumber() == 0) continue;
+            if (building.getId() == 14) continue;
+            Map<String, Object> buil = new HashMap<>();
+            buil.put("label", building.getName());
+            buil.put("value", building.getId());
+            List<Map<String, Object>> buildingMap = new ArrayList<>();
+            List<Integer> unitList = dormitoryService.getDormitoryUnitHasDor(building.getId());
+            for (Integer unit : unitList) {
+                Map<String, Object> un = new HashMap<>();
+                un.put("label", unit + "单元");
+                un.put("value", unit);
+                List<Map<String, Object>> unitMap = new ArrayList<>();
+                List<Integer> floorList = dormitoryService.getDormitoryFlootHasDor(building.getId(), unit);
+                for (Integer floor : floorList) {
+                    Map<String, Object> fl = new HashMap<>();
+                    fl.put("label", floor + "楼");
+                    fl.put("value", floor);
+                    List<Map<String, Object>> floorMap = new ArrayList<>();
+                    List<Dormitory> dormitoryList = dormitoryService.getDormitoryListByBuildingIdUnitFloor(building.getId(), unit, floor);
+                    for (Dormitory dormitory : dormitoryList) {
+                        Map<String, Object> dor = new HashMap<>();
+                        dor.put("label", building.getName() + unit + "单元" + floor + "楼" + dormitory.getName());
+                        dor.put("value", dormitory.getId());
+                        dor.put("bed", dormitory.getBedNumber() - dormitory.getStuNumber());
+                        List<Map<String, Object>> stuMap = new ArrayList<>();
+                        List<Student> studentList = studentService.getStudentByDormitoryId(dormitory.getId());
+                        for(Student student : studentList){
+                            Map<String, Object> stu = new HashMap<>();
+                            stu.put("label",student.getStudyId()+student.getName());
+                            stu.put("value", student.getId());
+                            stuMap.add(stu);
+                        }
+                        if(dormitory.getBedNumber() - dormitory.getStuNumber()>0){
+                            Map<String, Object> stu = new HashMap<>();
+                            stu.put("label","空床位");
+                            stu.put("value",-1);
+                            stuMap.add(stu);
+                        }
+                        dor.put("children", stuMap);
                         floorMap.add(dor);
                     }
                     fl.put("children", floorMap);

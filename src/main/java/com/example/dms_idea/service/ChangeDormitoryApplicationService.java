@@ -8,4 +8,6 @@ import java.util.Map;
 public interface ChangeDormitoryApplicationService {
 
     PageBean<ChangeDormitoryApplication> getApplicationList(int pageNum, int pageSize, String prop, String order, Map<String, Object> map);
+
+    void addApplication(Integer stuId, Integer newDorId, Integer newStuId,String newStuName, String newStudyId);
 }

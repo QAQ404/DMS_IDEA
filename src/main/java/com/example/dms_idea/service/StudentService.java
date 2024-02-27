@@ -4,6 +4,7 @@ import com.example.dms_idea.pojo.PageBean;
 import com.example.dms_idea.pojo.Student;
 import com.example.dms_idea.pojo.StudentInfo;
 
+import java.util.List;
 import java.util.Map;
 
 public interface StudentService {
@@ -32,4 +33,6 @@ public interface StudentService {
     void updateStudentInsId(Integer id, Integer insId);
 
     void deleteStudent(Integer id);
+
+    List<Student> getStudentByDormitoryId(int id);
 }

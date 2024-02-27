@@ -106,5 +106,10 @@ public class StudentServiceImpl implements StudentService {
         studentMapper.deleteStudent(id);
     }
 
+    @Override
+    public List<Student> getStudentByDormitoryId(int id) {
+        return studentMapper.getStudentByDormitoryId(id);
+    }
+
 
 }
