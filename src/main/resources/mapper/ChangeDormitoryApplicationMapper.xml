@@ -7,14 +7,60 @@
         from dormitory_management_system.view_change_dor_application
         <where>
             <if test="map.userId!=null">and stu_id=#{map.userId}</if>
+            <if test="map.state!=null">and state=#{map.state}</if>
+            <if test="map.stuName!=null">and stu_name like concat('%',#{map.stuName},'%')</if>
         </where>
         <if test="prop!=null">
             order by ${prop} ${order}
         </if>
     </select>
 
+    <select id="getApplicationById">
+        select *
+        from dormitory_management_system.view_change_dor_application where id=#{id};
+    </select>
+
     <insert id="addApplication">
-        insert into dormitory_management_system.change_dormitory_application(stu_id, new_dormitory_id, new_stu_id, new_stu_name, new_stu_study_id, state, create_time)
-        VALUES (#{stuId},#{newDorId},#{newStuId},#{newStuName},#{newStudyId},0,now())
+        insert into dormitory_management_system.change_dormitory_application(stu_id,old_id, new_dormitory_id, new_stu_id, new_stu_name, new_stu_study_id, state, create_time)
+        VALUES (#{stuId},#{oldDorId},#{newDorId},#{newStuId},#{newStuName},#{newStudyId},0,now())
     </insert>
+
+    <delete id="deleteApplication">
+        delete from dormitory_management_system.change_dormitory_application
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteApplicationByStuId">
+        delete from dormitory_management_system.change_dormitory_application
+        where stu_id = #{stuId}
+    </delete>
+
+    <delete id="deleteApplicationByOldIdOrNewId">
+        delete from dormitory_management_system.change_dormitory_application
+        where old_id=#{id} or new_dormitory_id=#{id}
+    </delete>
+
+    <update id="updateStateById">
+        update dormitory_management_system.change_dormitory_application
+        set state=#{state},update_time=now()
+        where id=#{id}
+    </update>
+
+    <update id="updateStateByNewStuId">
+        update dormitory_management_system.change_dormitory_application
+        set state=#{state},update_time=now()
+        where new_stu_id=#{newStuId} and state = 0
+    </update>
+
+    <update id="updateStateByNewIdAndNewStuId">
+        update dormitory_management_system.change_dormitory_application
+        set state=#{state},update_time=now()
+        where new_stu_id=#{newStuId} and state = 0 and new_dormitory_id=#{newId}
+    </update>
+
+    <update id="updateStateByStuId">
+        update dormitory_management_system.change_dormitory_application
+        set state=#{state},update_time=now()
+        where stu_id=#{stuId} and state = 0
+    </update>
 </mapper>

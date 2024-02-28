@@ -2,6 +2,7 @@ package com.example.dms_idea.controller;
 
 import com.example.dms_idea.pojo.*;
 import com.example.dms_idea.service.BuildingService;
+import com.example.dms_idea.service.ChangeDormitoryApplicationService;
 import com.example.dms_idea.service.DormitoryService;
 import com.example.dms_idea.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class DormitoryController {
 
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private ChangeDormitoryApplicationService changeDorAppService;
 
     @PostMapping("/getDormitoryList")   //获取全部寝室信息
     public Result<PageBean<Dormitory>> getDormitoryList(@RequestBody Map<String, Object> map) {
@@ -84,9 +88,14 @@ public class DormitoryController {
                     , dormitory.getFloorNumber(), dormitory.getBuildingId()) > 0)
                 return Result.error("此楼栋的此单元的此楼层存在重名寝室");
         }
-        buildingService.addDormitoryNumber(dormitory.getBuildingId(), 1);
-        buildingService.addDormitoryNumber(old.getBuildingId(), -1);
+        if(dormitory.getBuildingId()!=old.getBuildingId()){
+            buildingService.addDormitoryNumber(dormitory.getBuildingId(), 1);
+            buildingService.addDormitoryNumber(old.getBuildingId(), -1);
+        }
         dormitoryService.updateDormitory(dormitory);
+        if(dormitory.getBedNumber()==dormitory.getStuNumber()){
+            changeDorAppService.updateStateByNewIdAndNewStuId(dormitory.getId(),-1,-1);
+        }
         return Result.success();
     }
 
@@ -96,6 +105,7 @@ public class DormitoryController {
         if (dormitory.getStuNumber() > 0) return Result.error("删除失败,该宿舍内住着学生");
         buildingService.addDormitoryNumber(dormitory.getBuildingId(), -1);
         dormitoryService.deleteDormitory(id);
+        changeDorAppService.deleteApplicationByOldIdOrNewId(id);
         return Result.success();
     }
 

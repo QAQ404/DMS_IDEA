@@ -32,7 +32,47 @@ public class ChangeDormitoryApplicationImpl implements ChangeDormitoryApplicatio
     }
 
     @Override
-    public void addApplication(Integer stuId, Integer newDorId, Integer newStuId, String newStuName, String newStudyId) {
-        changeDorAppMapper.addApplication(stuId,newDorId,newStuId,newStuName,newStudyId);
+    public void addApplication(Integer stuId,Integer oldDorId, Integer newDorId, Integer newStuId, String newStuName, String newStudyId) {
+        changeDorAppMapper.addApplication(stuId,oldDorId,newDorId,newStuId,newStuName,newStudyId);
+    }
+
+    @Override
+    public void deleteApplication(Integer id) {
+        changeDorAppMapper.deleteApplication(id);
+    }
+
+    @Override
+    public void updateStateById(Integer id, int state) {
+        changeDorAppMapper.updateStateById(id,state);
+    }
+
+    @Override
+    public ChangeDormitoryApplication getApplicationById(Integer id) {
+        return changeDorAppMapper.getApplicationById(id);
+    }
+
+    @Override
+    public void updateStateByNewStuId(Integer newStuId, int state) {
+        changeDorAppMapper.updateStateByNewStuId(newStuId,state);
+    }
+
+    @Override
+    public void updateStateByNewIdAndNewStuId(Integer newId, int newStuId, int state) {
+        changeDorAppMapper.updateStateByNewIdAndNewStuId(newId,newStuId,state);
+    }
+
+    @Override
+    public void updateStateByStuId(Integer stuId, int state) {
+        changeDorAppMapper.updateStateByStuId(stuId,state);
+    }
+
+    @Override
+    public void deleteApplicationByStuId(Integer stuId) {
+        changeDorAppMapper.deleteApplicationByStuId(stuId);
+    }
+
+    @Override
+    public void deleteApplicationByOldIdOrNewId(String id) {
+        changeDorAppMapper.deleteApplicationByOldIdOrNewId(id);
     }
 }

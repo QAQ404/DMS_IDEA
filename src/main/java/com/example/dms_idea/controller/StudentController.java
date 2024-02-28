@@ -33,6 +33,8 @@ public class StudentController {
     @Autowired
     private ClazzService clazzService;
 
+    @Autowired
+    private ChangeDormitoryApplicationService changeDorAppService;
 
     @PostMapping("/getStudentList")
     public Result<PageBean<Student>> getStudentList(@RequestBody Map<String ,Object> map){
@@ -95,6 +97,7 @@ public class StudentController {
         if(oldStudent.getGender() != student.getGender()) studentService.updateStudentGender(student.getId(),student.getGender());
         if(oldStudent.getEntranceYear() != student.getEntranceYear()) studentService.updateStudentEntranceYear(student.getId(),student.getEntranceYear());
         studentService.updateStudentInfo(student.getStudentInfo());
+        //修改寝室
         if(student.getDormitoryId() != oldStudent.getDormitoryId()){
             studentService.updateStudentDormitoryId(student.getId(),student.getDormitoryId());
             dormitoryService.addStudentNumber(student.getDormitoryId(),1);
@@ -104,7 +107,15 @@ public class StudentController {
                 buildingService.addStudentNumber(dormitory.getBuildingId(),1);
                 buildingService.addStudentNumber(oldStudent.getBuildingId(),-1);
             }
+            //迁入的寝室不是暂未分配寝室 && 当前寝室没有空闲床位，那么迁入该寝室空床位的申请全部失效
+            if(student.getDormitoryId()!=1 && (dormitory.getBedNumber()==dormitory.getStuNumber())){
+                changeDorAppService.updateStateByNewIdAndNewStuId(student.getDormitoryId(),-1,-1);
+            }
+            //与申请人有关的申请全部失效
+            changeDorAppService.updateStateByNewStuId(student.getId(),-1);
+            changeDorAppService.updateStateByStuId(student.getId(),-1);
         }
+        //修改班级
         if(student.getClazzId() != oldStudent.getClazzId()){
             studentService.updateStudentClazzId(student.getId(),student.getClazzId());
             clazzService.addStudentNumber(student.getClazzId(),1);
@@ -136,6 +147,9 @@ public class StudentController {
         instituteService.addStudentNumber(student.getInsId(),-1);
         dormitoryService.addStudentNumber(student.getDormitoryId(),-1);
         buildingService.addStudentNumber(student.getBuildingId(),-1);
+        //与目标人物有关的申请全部失效
+        changeDorAppService.updateStateByNewStuId(id,-1);
+        changeDorAppService.deleteApplicationByStuId(id);
         return Result.success();
     }
 
@@ -157,6 +171,15 @@ public class StudentController {
             if(student.getBuildingId() != dormitory.getBuildingId()){
                 buildingService.addStudentNumber(student.getBuildingId(),-1);
                 buildingService.addStudentNumber(dormitory.getBuildingId(),1);
+            }
+            //与申请人有关的申请全部失效
+            changeDorAppService.updateStateByNewStuId(student.getId(),-1);
+            changeDorAppService.updateStateByStuId(student.getId(),-1);
+        }
+        if(dorId!=1){
+            Dormitory dormitory1 = dormitoryService.getDormitoryById(dorId);
+            if(dormitory1.getStuNumber()==dormitory1.getBedNumber()){
+                changeDorAppService.updateStateByNewIdAndNewStuId(dorId,-1,-1);
             }
         }
         return Result.success();
