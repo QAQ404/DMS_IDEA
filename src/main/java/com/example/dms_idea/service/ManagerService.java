@@ -23,5 +23,7 @@ public interface ManagerService {
 
     Manager getManagerById(String id);
 
+    Manager getManagerById(Integer id);
+
     void deleteManagerById(String id);
 }

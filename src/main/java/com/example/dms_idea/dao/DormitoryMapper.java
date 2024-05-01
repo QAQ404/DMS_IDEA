@@ -36,4 +36,10 @@ public interface DormitoryMapper {
     List<Integer> getDormitoryUnitHasDor(int buildingId);
 
     List<Integer> getDormitoryFlootHasDor(int buildingId, Integer unit);
+
+    List<Integer> getDormitoryUnitHasStu(int buildingId);
+
+    List<Integer> getDormitoryFlootHasStu(int buildingId, Integer unit);
+
+    List<Dormitory> getDormitoryListByBuildingIdUnitFloorHasStu(int id, int unit, int floor);
 }

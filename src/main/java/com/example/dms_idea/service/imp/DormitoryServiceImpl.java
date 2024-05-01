@@ -101,6 +101,11 @@ public class DormitoryServiceImpl implements DormitoryService {
     }
 
     @Override
+    public List<Dormitory> getDormitoryListByBuildingIdUnitFloorHasStu(int id, int unit, int floor) {
+        return dormitoryMapper.getDormitoryListByBuildingIdUnitFloorHasStu(id,unit,floor);
+    }
+
+    @Override
     public List<Integer> getDormitoryUnitHasDor(int buildingId) {
         return dormitoryMapper.getDormitoryUnitHasDor(buildingId);
     }
@@ -108,5 +113,15 @@ public class DormitoryServiceImpl implements DormitoryService {
     @Override
     public List<Integer> getDormitoryFlootHasDor(int buildingId, Integer unit) {
         return dormitoryMapper.getDormitoryFlootHasDor(buildingId,unit);
+    }
+
+    @Override
+    public List<Integer> getDormitoryUnitHasStu(int buildingId) {
+        return dormitoryMapper.getDormitoryUnitHasStu(buildingId);
+    }
+
+    @Override
+    public List<Integer> getDormitoryFlootHasStu(int buildingId, Integer unit) {
+        return dormitoryMapper.getDormitoryFlootHasStu(buildingId,unit);
     }
 }

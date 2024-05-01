@@ -33,4 +33,10 @@ public interface DormitoryService {
     List<Integer> getDormitoryUnitHasDor(int buildingId);
 
     List<Integer> getDormitoryFlootHasDor(int buildingId, Integer unit);
+
+    List<Integer> getDormitoryUnitHasStu(int id);
+
+    List<Integer> getDormitoryFlootHasStu(int buildingId, Integer unit);
+
+    List<Dormitory> getDormitoryListByBuildingIdUnitFloorHasStu(int id, int unit, int floor);
 }

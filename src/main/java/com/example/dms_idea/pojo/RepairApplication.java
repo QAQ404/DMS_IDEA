@@ -31,5 +31,6 @@ public class RepairApplication {
     private String buildingName;
     private Integer buildingManId;
     private Integer managerId;
+    private String managerName;
     private String managerMessage;
 }

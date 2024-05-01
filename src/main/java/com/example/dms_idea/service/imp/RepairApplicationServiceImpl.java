@@ -31,4 +31,24 @@ public class RepairApplicationServiceImpl implements RepairApplicationService {
         pageBean.setItems(pageBeanList.getResult());
         return pageBean;
     }
+
+    @Override
+    public void addApplication(Integer stuId, Integer dorId, String troubleItem, String description, String picture) {
+        repairApplicationMapper.addApplication(stuId,dorId,troubleItem,description,picture);
+    }
+
+    @Override
+    public void deleteApplication(Integer id) {
+        repairApplicationMapper.deleteApplication(id);
+    }
+
+    @Override
+    public void solveApplication(Integer id, Integer mangerId, String message) {
+        repairApplicationMapper.solveApplication(id,mangerId,message);
+    }
+
+    @Override
+    public void updateAppState(Integer id, Integer state) {
+        repairApplicationMapper.updateAppState(id,state);
+    }
 }

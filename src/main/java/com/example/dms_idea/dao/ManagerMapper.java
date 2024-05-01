@@ -24,5 +24,7 @@ public interface ManagerMapper {
 
     Manager getManagerById(String id);
 
+    Manager getManagerById(Integer id);
+
     void deleteManagerById(String id);
 }

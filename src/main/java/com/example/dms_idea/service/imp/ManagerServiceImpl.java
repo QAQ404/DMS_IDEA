@@ -70,6 +70,11 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
+    public Manager getManagerById(Integer id) {
+        return managerMapper.getManagerById(id);
+    }
+
+    @Override
     public void deleteManagerById(String id) {
         managerMapper.deleteManagerById(id);
     }

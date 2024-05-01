@@ -6,10 +6,35 @@
         select *
         from dormitory_management_system.view_repair_application
         <where>
-
+            <if test="map.userId!=null">and stu_id=#{map.userId}</if>
+            <if test="map.state!=null">and state=#{map.state}</if>
+            <if test="map.troubleItem!=null">and trouble_item=#{map.troubleItem}</if>
+            <if test="map.stuName!=null">and stu_name like concat('%',#{map.stuName},'%')</if>
         </where>
         <if test="prop!=null">
             order by ${prop} ${order}
         </if>
     </select>
+
+    <insert id="addApplication">
+        insert into dormitory_management_system.repair_application(stu_id,dor_id,trouble_item,description,picture,create_time)
+        VALUES (#{stuId},#{dorId},#{troubleItem},#{description},#{picture},now())
+    </insert>
+
+    <update id="solveApplication">
+        update dormitory_management_system.repair_application
+        set manager_id=#{mangerId},manager_message=#{message},update_time=now()
+        where id=#{id}
+    </update>
+
+    <update id="updateAppState">
+        update dormitory_management_system.repair_application
+        set state=#{state},update_time=now()
+        where id=#{id}
+    </update>
+
+    <delete id="deleteApplication">
+        delete from dormitory_management_system.repair_application
+        where id=#{id}
+    </delete>
 </mapper>
