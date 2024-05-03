@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dms_idea.dao.EmailMapper">
+    <insert id="addEmail">
+        insert into dormitory_management_system.email(send, send_id, re, re_id, theme, content, create_time)
+        VALUES (#{send}, #{sendId}, #{re}, #{reId}, #{theme}, #{content}, now())
+    </insert>
+
+    <select id="getEmailList">
+        select *
+        from dormitory_management_system.view_get_all_email_list
+        <where>
+            <if test="show == 1">and re = #{map.userId} and re_show = 1
+                <if test="map.name!=null">and send_name like concat('%',#{map.name},'%')</if>
+                <if test="map.workId!=null">and send_id like concat('%',#{map.workId},'%')</if>
+            </if>
+            <if test="show == 2">and send = #{map.userId} and send_show = 1
+                <if test="map.name!=null">and re_name like concat('%',#{map.name},'%')</if>
+                <if test="map.workId!=null">and re_id like concat('%',#{map.workId},'%')</if>
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="getEmailById">
+        select *
+        from dormitory_management_system.view_get_all_email_list
+        where id = #{id}
+    </select>
+
+    <update id="updateReShow">
+        update dormitory_management_system.email
+        set re_show = 0
+        where id = #{id}
+    </update>
+
+    <update id="updateSendShow">
+        update dormitory_management_system.email
+        set send_show = 0
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmail">
+        delete
+        from dormitory_management_system.email
+        where id = #{id}
+    </delete>
+</mapper>

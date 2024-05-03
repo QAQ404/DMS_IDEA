@@ -24,5 +24,7 @@ public interface UserMapper {
 
     int getUserRoleById(String id);
 
+    int getUserRoleById(Integer id);
+
     User getUserByUsername(String username);
 }
