@@ -173,6 +173,47 @@ public class DormitoryController {
         return Result.success(map);
     }
 
+    @GetMapping("/getDormitoryListNoDisabledCascader")
+    public Result<List<Map<String, Object>>> getDormitoryListNoDisabledCascader() {
+        List<Map<String, Object>> map = new ArrayList<>();
+        List<Building> buildingList = buildingService.getBuildingList();
+        for (Building building : buildingList) {
+            if (building.getDorNumber() == 0) continue;
+            Map<String, Object> buil = new HashMap<>();
+            buil.put("label", building.getName());
+            buil.put("value", building.getId());
+            List<Map<String, Object>> buildingMap = new ArrayList<>();
+            List<Integer> unitList = dormitoryService.getDormitoryUnitHasDor(building.getId());
+            for (Integer unit : unitList) {
+                Map<String, Object> un = new HashMap<>();
+                un.put("label", unit + "单元");
+                un.put("value", unit);
+                List<Map<String, Object>> unitMap = new ArrayList<>();
+                List<Integer> floorList = dormitoryService.getDormitoryFlootHasDor(building.getId(), unit);
+                for (Integer floor : floorList) {
+                    Map<String, Object> fl = new HashMap<>();
+                    fl.put("label", floor + "楼");
+                    fl.put("value", floor);
+                    List<Map<String, Object>> floorMap = new ArrayList<>();
+                    List<Dormitory> dormitoryList = dormitoryService.getDormitoryListByBuildingIdUnitFloor(building.getId(), unit, floor);
+                    for (Dormitory dormitory : dormitoryList) {
+                        Map<String, Object> dor = new HashMap<>();
+                        dor.put("label", building.getName() + unit + "单元" + floor + "楼" + dormitory.getName());
+                        dor.put("value", dormitory.getId());
+                        floorMap.add(dor);
+                    }
+                    fl.put("children", floorMap);
+                    unitMap.add(fl);
+                }
+                un.put("children", unitMap);
+                buildingMap.add(un);
+            }
+            buil.put("children", buildingMap);
+            map.add(buil);
+        }
+        return Result.success(map);
+    }
+
     @GetMapping("/getDormitoryBedListCascader")
     public Result<List<Map<String, Object>>> getDormitoryBedListCascader() {
         List<Map<String, Object>> map = new ArrayList<>();

@@ -28,5 +28,4 @@ public class Student {
     private String studyId; //学号
     private String entranceYear;//入学年份
     private StudentInfo studentInfo;
-
 }

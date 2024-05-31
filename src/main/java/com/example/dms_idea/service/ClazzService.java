@@ -8,22 +8,13 @@ import java.util.Map;
 
 public interface ClazzService {
     PageBean<Clazz> getClazzList(int pageNum, int pageSize, String prop, String order, Map<String, Object> map);
-
     Clazz getClazzByName(Integer name, String insName, String majorName, Integer entranceYear);
-
     void addClazz(Integer name, Integer majorId, Integer entranceYear);
-
     Clazz getClazzById(Integer id);
-
     void updateClazz(Clazz clazz);
-
     void deleteClazz(Integer id);
-
     List<Clazz> getClazzList();
-
     List<Clazz> getClazzListByMajorInstituteYear(String majorName, String insName,Integer year);
-
     void addStudentNumber(Integer id, int num);
-
     List<Integer> getClazzYearByMajorInstitute(String majorName, String insName);
 }
